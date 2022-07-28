@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  mysql:
+    # platform: linux/x86_64 => uncomment this line to run on macOS M1
+    container_name: mysql-container
+    image: mysql
+    env_file:
+      - .env
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
