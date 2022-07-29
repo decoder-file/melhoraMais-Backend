@@ -28,7 +28,6 @@ export class UserRepository {
       updatedAt: new Date(),
       ...params
     })
-    
   }
 
   async delete (id: string): Promise<void> {

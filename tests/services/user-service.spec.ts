@@ -3,7 +3,9 @@ import { UserService } from "@/services"
 
 import { mockUser, userModel } from "@/tests/mocks"
 
-import * as bcrypt from 'bcryptjs'
+jest.mock('bcryptjs', () => ({
+  hash: jest.fn().mockImplementation(() => 'any-hashed-password')
+}))
 
 describe('UserService', () => {
   const userRepository = {} as UserRepository
