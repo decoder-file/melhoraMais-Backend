@@ -1,9 +1,7 @@
-import { randomUUID } from 'node:crypto'
+import { CalculationModel } from '@/models'
+import { CalculationDTO } from '@/dtos'
 
-import { CalculationModel, CreateCalculationDTO } from '@/models'
-
-export const mockCalculation: CreateCalculationDTO = {
-  tag: 'any-tag',
+export const mockCalculation: CalculationDTO = {
   title: 'any-title',
   description: 'any-description',
   bash: 'any-bash',
@@ -23,7 +21,21 @@ export const mockCalculation: CreateCalculationDTO = {
 
 export const calculationModel: CalculationModel = {
   id: 'any-id',
-  created_at: new Date('2022-08-01'),
-  updated_at: new Date('2022-08-02'),
-  ...mockCalculation
+  tag: 'any-tag',
+  title: 'any-title',
+  description: 'any-description',
+  bash: 'any-bash',
+  entrance_weight: 'any-entranceWeight',
+  daily_cost: 'any-dailyCost',
+  gmd: 'any-gmd',
+  purchase_price: 'any-purchasePrice',
+  length_of_stay: 'any-lengthOfStay',
+  output_weight: 'any-outputWeight',
+  rc_initial: 'any-rcInitial',
+  rc_end: 'any-rcEnd',
+  sale_price: 'any-salePrice',
+  produced_price: 'any-producedPrice',
+  return_on_capital: 'any-returnOnCapital',
+  result: 'any-result',
+  created_at: new Date('2022-08-01')
 }

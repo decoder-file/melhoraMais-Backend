@@ -1,8 +1,9 @@
-import { CreateCalculationDTO } from '@/models'
+import { CalculationModel, CreateCalculationDTO } from '@/models'
 import { mysqlSource } from '@/repositories/mysql-connection'
 import { CalculationEntity } from '@/repositories/entities'
 
 import { Repository } from 'typeorm'
+import { CalculationDTO } from '@/dtos'
 
 export class CalculationRepository {
   private readonly calculations: Repository<CalculationEntity>
@@ -15,14 +16,16 @@ export class CalculationRepository {
     return await this.calculations.find()
   }
 
-  async create (params: CreateCalculationDTO): Promise<void> {
-    await this.calculations.save(params)
+  async create (params: CalculationDTO): Promise<void> {
+    const calculation = new CalculationModel(params)
+    await this.calculations.save(calculation)
   }
 
-  async update (calculationId: string, params: CreateCalculationDTO): Promise<void> {
+  async update (calculationId: string, params: CalculationDTO): Promise<void> {
+    const calculation = new CalculationModel(params)
     await this.calculations.update({ id: calculationId }, {
-      updatedAt: new Date(),
-      ...params
+      updated_at: new Date(),
+      ...calculation
     })
   }
 

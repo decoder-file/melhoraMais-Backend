@@ -37,11 +37,11 @@ export class createCalculationsTable1659058357231 implements MigrationInterface 
               type: 'varchar',
             },
             {
-              name: 'entranceWeight',
+              name: 'entrance_weight',
               type: 'varchar',
             },
             {
-              name: 'dailyCost',
+              name: 'daily_cost',
               type: 'varchar',
             },
             {
@@ -49,35 +49,35 @@ export class createCalculationsTable1659058357231 implements MigrationInterface 
               type: 'varchar',
             },
             {
-              name: 'purchasePrice',
+              name: 'purchase_price',
               type: 'varchar',
             },
             {
-              name: 'lengthOfStay',
+              name: 'length_of_stay',
               type: 'varchar',
             },
             {
-              name: 'outputWeight',
+              name: 'output_weight',
               type: 'varchar',
             },
             {
-              name: 'rcInitial',
+              name: 'rc_initial',
               type: 'varchar',
             },
             {
-              name: 'rcEnd',
+              name: 'rc_end',
               type: 'varchar',
             },
             {
-              name: 'salePrice',
+              name: 'sale_price',
               type: 'varchar',
             },
             {
-              name: 'producedPrice',
+              name: 'produced_price',
               type: 'varchar',
             },
             {
-              name: 'returnOnCapital',
+              name: 'return_on_capital',
               type: 'varchar',
             },
             {

@@ -18,44 +18,44 @@ export class CalculationEntity {
   bash!: string
 
   @Column()
-  entranceWeight!: string
+  entrance_weight!: string
 
   @Column()
-  dailyCost!: string
+  daily_cost!: string
 
   @Column()
   gmd!: string
 
   @Column()
-  purchasePrice!: string
+  purchase_price!: string
 
   @Column()
-  lengthOfStay!: string
+  length_of_stay!: string
 
   @Column()
-  outputWeight!: string
+  output_weight!: string
 
   @Column()
-  rcInitial!: string
+  rc_initial!: string
 
   @Column()
-  rcEnd!: string
+  rc_end!: string
 
   @Column()
-  salePrice!: string
+  sale_price!: string
 
   @Column()
-  producedPrice!: string
+  produced_price!: string
 
   @Column()
-  returnOnCapital!: string
+  return_on_capital!: string
 
   @Column()
   result!: string
 
-  @Column({ name: 'created_at', default: () => 'now()' })
-  createdAt!: Date
+  @Column()
+  created_at!: Date
 
-  @Column({ name: 'updated_at', nullable: true })
-  updatedAt!: Date
+  @Column({ nullable: true })
+  updated_at!: Date
 }

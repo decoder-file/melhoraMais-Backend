@@ -21,12 +21,7 @@ describe('CalculationService', () => {
   
       await calculationService.create(mockCalculation)
 
-      expect(calculationRepository.create).toHaveBeenNthCalledWith(1, {
-        id: 'any-id',
-        created_at: new Date('2022-08-01'),
-        updated_at: null,
-        ...mockCalculation
-      })
+      expect(calculationRepository.create).toHaveBeenNthCalledWith(1, mockCalculation)
     })
   })
 
