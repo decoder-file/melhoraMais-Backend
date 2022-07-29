@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 
-type UserData = UserModel
+import { UserDTO } from '@/dtos'
 
 export class UserModel {
   id?: string
@@ -10,7 +10,7 @@ export class UserModel {
   created_at: Date
   updated_at: Date | null
 
-  constructor (user: UserData) {
+  constructor (user: UserDTO) {
     if (!this.id) randomUUID()
     this.name = user.name
     this.email = user.email
@@ -19,5 +19,3 @@ export class UserModel {
     this.updated_at = null
   }
 }
-
-export type CreateUserDTO = Omit<UserModel, 'id'|'created_at'|'updated_at'>

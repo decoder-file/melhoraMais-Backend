@@ -42,5 +42,3 @@ export class CalculationModel {
     this.created_at = new Date()
   }
 }
-
-export type CreateCalculationDTO = Omit<CalculationModel, 'created_at'|'updated_at'>

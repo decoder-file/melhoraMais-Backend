@@ -1,6 +1,6 @@
+import { UserDTO } from '@/dtos'
 import { RequestError } from '@/errors'
 import { env } from '@/main/config/env'
-import { CreateUserDTO, UserModel } from '@/models/user'
 import { UserRepository } from '@/repositories'
 import { UserEntity } from '@/repositories/entities'
 import { hash } from 'bcryptjs'
@@ -16,7 +16,7 @@ export class UserService {
     return await this.userRepository.findById(id)
   }
 
-  async create (params: CreateUserDTO): Promise<void> {
+  async create (params: UserDTO): Promise<void> {
     const { email, password } = params
     const user = await this.userRepository.findByEmail(email)
     if (user) throw new RequestError('Usuário já existe.')
@@ -24,7 +24,7 @@ export class UserService {
     await this.userRepository.create(userToCreate)
   }
 
-  async update (id: string, params: CreateUserDTO): Promise<void> {
+  async update (id: string, params: UserDTO): Promise<void> {
     const user = await this.userRepository.findById(id)
     if (!user) throw new RequestError('Usuário não existe.')
     await this.userRepository.update(user, params)

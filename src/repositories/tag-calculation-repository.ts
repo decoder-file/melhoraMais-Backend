@@ -1,9 +1,9 @@
-import { CalculationModel, TagCalculationModel } from '@/models'
+import { TagCalculationModel } from '@/models'
 import { mysqlSource } from '@/repositories/mysql-connection'
 import { TagCalculationEntity } from '@/repositories/entities'
+import { TagCalculationDTO } from '@/dtos'
 
 import { Repository } from 'typeorm'
-import { CalculationDTO, TagCalculationDTO } from '@/dtos'
 
 export class TagCalculationRepository {
   private readonly tagCalculations: Repository<TagCalculationEntity>

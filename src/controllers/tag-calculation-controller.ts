@@ -1,7 +1,6 @@
 import { RequestError } from '@/errors'
 import { TagCalculationRepository } from '@/repositories'
-import { CalculationService } from '@/services'
-import { TagCalculationService } from '@/services/tag-calculation-service'
+import { TagCalculationService } from '@/services'
 
 import { Request, Response } from 'express'
 

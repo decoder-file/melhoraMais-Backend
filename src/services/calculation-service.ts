@@ -1,6 +1,5 @@
 import { CalculationDTO } from '@/dtos'
 import { RequestError } from '@/errors'
-import { CalculationModel, CreateCalculationDTO } from '@/models'
 import { CalculationRepository } from '@/repositories'
 import { CalculationEntity } from '@/repositories/entities'
 

@@ -14,7 +14,7 @@ export class UserEntity {
   @Column()
   password!: string
 
-  @Column({ name: 'created_at', default: () => 'now()' })
+  @Column({ name: 'created_at' })
   createdAt!: Date
 
   @Column({ name: 'updated_at', nullable: true })

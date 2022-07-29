@@ -1,10 +1,11 @@
 import { randomUUID } from 'node:crypto'
 
-import { CreateUserDTO, UserModel } from '@/models'
+import { UserModel } from '@/models'
+import { UserDTO } from '@/dtos'
 
 export const mockUUID = randomUUID()
 
-export const mockUser: CreateUserDTO = {
+export const mockUser: UserDTO = {
   name: 'any-name',
   email: 'any-email',
   password: 'any-hashed-password',

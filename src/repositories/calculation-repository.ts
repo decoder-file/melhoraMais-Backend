@@ -1,9 +1,9 @@
-import { CalculationModel, CreateCalculationDTO } from '@/models'
+import { CalculationModel } from '@/models'
 import { mysqlSource } from '@/repositories/mysql-connection'
 import { CalculationEntity } from '@/repositories/entities'
+import { CalculationDTO } from '@/dtos'
 
 import { Repository } from 'typeorm'
-import { CalculationDTO } from '@/dtos'
 
 export class CalculationRepository {
   private readonly calculations: Repository<CalculationEntity>

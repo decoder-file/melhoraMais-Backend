@@ -1,8 +1,10 @@
-import { CreateUserDTO } from "@/models";
-import { UserEntity } from '@/repositories/entities';
-import { Repository } from 'typeorm';
-import { mysqlSource } from '@/repositories/mysql-connection';
-import { randomUUID } from "crypto";
+import { randomUUID } from 'node:crypto'
+
+import { UserDTO } from '@/dtos'
+import { UserEntity } from '@/repositories/entities'
+import { mysqlSource } from '@/repositories/mysql-connection'
+
+import { Repository } from 'typeorm'
 
 export class UserRepository {
   private readonly users: Repository<UserEntity>
@@ -15,14 +17,14 @@ export class UserRepository {
     return await this.users.find()
   }
   
-  async create (params: CreateUserDTO): Promise<void> {
+  async create (params: UserDTO): Promise<void> {
     await this.users.save({
       id: randomUUID(),
       ...params
     })
   }
 
-  async update (user: UserEntity, params: CreateUserDTO): Promise<void> {
+  async update (user: UserEntity, params: UserDTO): Promise<void> {
     await this.users.update({ id: user.id }, {
       updatedAt: new Date(),
       ...params
