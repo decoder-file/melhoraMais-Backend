@@ -1,4 +1,4 @@
-import { RequestError } from '@/errors'
+import { NotAuhorizedError, RequestError } from '@/errors'
 import { UserRepository } from '@/repositories'
 import { UserService } from '@/services'
 
@@ -52,13 +52,15 @@ export class UserController {
       const users = await this.userService.get()
       res.status(200).json(users)
     } catch (err) {
-      res.sendStatus(500)
+      this.handleError(err, res)
     }
   }
 
   private handleError (error: unknown, res: Response): void {
     if (error instanceof RequestError) {
       res.status(422).json({ message: error.message })
+    } else if (error instanceof NotAuhorizedError) {
+      res.status(401).json({ message: error.message })
     } else {
       res.status(500).json({ message: error })
     }

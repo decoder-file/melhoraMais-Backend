@@ -1,18 +1,24 @@
 import express, { Router, json } from 'express'
 import cors from 'cors'
 
-import { UserController, CalculationController, TagCalculationController} from '@/controllers'
+import { UserController, CalculationController, TagCalculationController, LoginController} from '@/controllers'
+import { ensureAuthenticate } from '@/middlewares/ensure-authenticated'
 
 export const app = express()
 const router = Router()
 const userController = new UserController()
 const calculationController = new CalculationController()
 const tagCalculationController = new TagCalculationController()
+const loginController = new LoginController()
 
 app.use(cors())
 app.use(json())
 
 router.post('/users', async (req, res) => userController.create(req, res))
+router.post('/login', async (req, res) => loginController.handle(req, res))
+
+app.use(ensureAuthenticate)
+
 router.get('/users', async (req, res) => userController.get(req, res))
 router.get('/users/:id', async (req, res) => userController.getById(req, res))
 router.delete('/users/:id', async (req, res) => userController.delete(req, res))

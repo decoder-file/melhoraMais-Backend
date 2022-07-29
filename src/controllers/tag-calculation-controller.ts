@@ -1,4 +1,4 @@
-import { RequestError } from '@/errors'
+import { NotAuhorizedError, RequestError } from '@/errors'
 import { TagCalculationRepository } from '@/repositories'
 import { TagCalculationService } from '@/services'
 
@@ -34,7 +34,7 @@ export class TagCalculationController {
       const tagCalculations = await this.tagCalculationService.get()
       res.status(200).json(tagCalculations)
     } catch (err) {
-      res.sendStatus(500)
+      this.handleError(err, res)
     }
   }
 
@@ -59,6 +59,8 @@ export class TagCalculationController {
   private handleError (error: unknown, res: Response): void {
     if (error instanceof RequestError) {
       res.status(422).json({ message: error.message })
+    } else if (error instanceof NotAuhorizedError) {
+      res.status(401).json({ message: error.message })
     } else {
       res.status(500).json({ message: error })
     }
