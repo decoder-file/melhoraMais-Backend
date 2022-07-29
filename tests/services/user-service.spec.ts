@@ -3,11 +3,18 @@ import { UserService } from "@/services"
 
 import { mockUser, userModel } from "@/tests/mocks"
 
+import * as bcrypt from 'bcryptjs'
+
 describe('UserService', () => {
   const userRepository = {} as UserRepository
   const userService = new UserService(userRepository)
+  const hashedPassword = 'any-hashed-password'
 
   describe('create', () => {
+    jest.mock('bcryptjs', () => ({
+      hash: jest.fn().mockResolvedValue(hashedPassword)
+    }))
+
     it('should be able to create user', async () => {
       userRepository.findByEmail = jest.fn()
       userRepository.create = jest.fn()
@@ -15,7 +22,10 @@ describe('UserService', () => {
       await userService.create(mockUser)
   
       expect(userRepository.findByEmail).toHaveBeenNthCalledWith(1, mockUser.email)
-      expect(userRepository.create).toHaveBeenNthCalledWith(1, mockUser)
+      expect(userRepository.create).toHaveBeenNthCalledWith(1, {
+        ...mockUser,
+        password: hashedPassword
+      })
     })
   
     it('should not be able to create user with existing email', async () => {

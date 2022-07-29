@@ -1,8 +1,9 @@
 import { RequestError } from '@/errors'
+import { env } from '@/main/config/env'
 import { CreateUserDTO, UserModel } from '@/models/user'
 import { UserRepository } from '@/repositories'
 import { UserEntity } from '@/repositories/entities'
-import { randomUUID } from 'crypto'
+import { hash } from 'bcryptjs'
 
 export class UserService {
   constructor (private readonly userRepository: UserRepository) {}
@@ -16,9 +17,11 @@ export class UserService {
   }
 
   async create (params: CreateUserDTO): Promise<void> {
-    const user = await this.userRepository.findByEmail(params.email)
+    const { email, password } = params
+    const user = await this.userRepository.findByEmail(email)
     if (user) throw new RequestError('Usuário já existe.')
-    await this.userRepository.create(params)
+    const userToCreate = { ...params, password: await this.encrypt(password) }
+    await this.userRepository.create(userToCreate)
   }
 
   async update (id: string, params: CreateUserDTO): Promise<void> {
@@ -31,5 +34,9 @@ export class UserService {
     const user = await this.userRepository.findById(id)
     if (!user) throw new RequestError('Usuário não existe.')
     await this.userRepository.delete(user.id)
+  }
+
+  public async encrypt (password: string): Promise<string> {
+    return hash(password, env.encrypt.salt);
   }
 }

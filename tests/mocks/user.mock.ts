@@ -7,7 +7,7 @@ export const mockUUID = randomUUID()
 export const mockUser: CreateUserDTO = {
   name: 'any-name',
   email: 'any-email',
-  password: 'any-password',
+  password: 'any-hashed-password',
 }
 
 export const userModel: UserModel = {
