@@ -24,7 +24,6 @@ export class UserRepository {
 
   async update (user: UserEntity, params: CreateUserDTO): Promise<void> {
     await this.users.update({ id: user.id }, {
-      id: randomUUID(),
       updatedAt: new Date(),
       ...params
     })

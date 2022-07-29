@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto'
 type UserData = UserModel
 
 export class UserModel {
-  id: string
+  id?: string
   name: string
   email: string
   password: string
@@ -11,7 +11,7 @@ export class UserModel {
   updated_at: Date | null
 
   constructor (user: UserData) {
-    this.id = randomUUID()
+    if (!this.id) randomUUID()
     this.name = user.name
     this.email = user.email
     this.password = user.password

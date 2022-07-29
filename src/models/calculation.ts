@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto'
 
 import { CalculationDTO } from '@/dtos'
 export class CalculationModel {
-  id: string
+  id?: string
   tag?: string
   title?: string
   description?: string
@@ -22,7 +22,7 @@ export class CalculationModel {
   created_at?: Date
 
   constructor (calculation: CalculationDTO) {
-    this.id = randomUUID()
+    if (!this.id) randomUUID()
     this.tag = calculation.tag
     this.title = calculation.title
     this.description = calculation.description

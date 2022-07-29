@@ -48,7 +48,7 @@ describe('UserService', () => {
       userRepository.findById = jest.fn().mockResolvedValue(userModel)
       userRepository.update = jest.fn()
 
-      await userService.update(userModel.id, mockUser)
+      await userService.update('any-id', mockUser)
 
       expect(userRepository.findById).toHaveBeenNthCalledWith(1, userModel.id)
       expect(userRepository.update).toHaveBeenNthCalledWith(1, userModel, mockUser)
@@ -73,10 +73,10 @@ describe('UserService', () => {
       userRepository.findById = jest.fn().mockResolvedValue(userModel)
       userRepository.delete = jest.fn()
 
-      await userService.delete(userModel.id)
+      await userService.delete('any-id')
 
-      expect(userRepository.findById).toHaveBeenNthCalledWith(1, userModel.id)
-      expect(userRepository.delete).toHaveBeenNthCalledWith(1, userModel.id)
+      expect(userRepository.findById).toHaveBeenNthCalledWith(1, 'any-id')
+      expect(userRepository.delete).toHaveBeenNthCalledWith(1, 'any-id')
     })
 
     it('should not be able to delete non-existing user', async () => {
@@ -115,17 +115,17 @@ describe('UserService', () => {
     it('should be able to get user by id', async () => {
       userRepository.findById = jest.fn().mockResolvedValue(userModel)
 
-      await userService.getById(userModel.id)
+      await userService.getById('any-id')
 
-      expect(userRepository.findById).toHaveBeenNthCalledWith(1, userModel.id)
+      expect(userRepository.findById).toHaveBeenNthCalledWith(1, 'any-id')
     })
 
     it('should not be able to get user by id', async () => {
       userRepository.findById = jest.fn().mockResolvedValue({})
 
-      await userService.getById(userModel.id)
+      await userService.getById('any-id')
 
-      expect(userRepository.findById).toHaveBeenNthCalledWith(1, userModel.id)
+      expect(userRepository.findById).toHaveBeenNthCalledWith(1, 'any-id')
     })
   })
 })

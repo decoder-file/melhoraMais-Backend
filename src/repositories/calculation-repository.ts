@@ -22,10 +22,9 @@ export class CalculationRepository {
   }
 
   async update (calculationId: string, params: CalculationDTO): Promise<void> {
-    const calculation = new CalculationModel(params)
     await this.calculations.update({ id: calculationId }, {
       updated_at: new Date(),
-      ...calculation
+      ...params
     })
   }
 
