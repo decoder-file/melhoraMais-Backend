@@ -5,16 +5,12 @@ import { LoginService } from '@/services'
 import { Request, Response } from 'express'
 
 export class LoginController {
-  private readonly loginService: LoginService
-
-  constructor () {
-    this.loginService = new LoginService(new UserRepository())
-  }
+  constructor (private readonly loginService: LoginService) {}
 
   async handle (req: Request, res: Response): Promise<any> {
     try {
-      const { token, refreshToken } = await this.loginService.login(req.body)
-      res.status(200).json({ token, refreshToken })
+      const { access_token, refresh_token } = await this.loginService.login(req.body)
+      res.status(200).json({ access_token, refresh_token })
     } catch (err) {
       this.handleError(err, res)
     }
