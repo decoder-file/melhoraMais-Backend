@@ -20,18 +20,18 @@ export class LoginService {
   private async checkPassword (password: string, user: UserEntity): Promise<LoginResponseDTO> {
     const passwordMatched = await compare(password, user.password)
     if (!passwordMatched) throw new RequestError('Usuário/senha inválido.')
-    const token = sign({}, String(env.jwt.secret), {
+    const access_token = sign({}, String(env.jwt.secret), {
       subject: user.id,
       expiresIn: env.jwt.expiresIn
     })
     const userEmail = user.email
-    const refreshToken = sign({ userEmail }, String(env.jwt.refreshSecretToken), {
+    const refresh_token = sign({ userEmail }, String(env.jwt.refreshSecretToken), {
       subject: user.id,
       expiresIn: env.jwt.refreshTokenExpiresIn
     })
     return {
-      token,
-      refreshToken
+      access_token,
+      refresh_token
     }
   }
 }

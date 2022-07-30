@@ -1,4 +1,4 @@
 export type LoginResponseDTO = {
-  token: string
-  refreshToken: string
+  access_token: string
+  refresh_token: string
 }
