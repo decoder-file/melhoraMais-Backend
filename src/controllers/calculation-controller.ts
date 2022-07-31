@@ -1,15 +1,10 @@
 import { NotAuhorizedError, RequestError } from '@/errors'
-import { CalculationRepository } from '@/repositories'
 import { CalculationService } from '@/services'
 
 import { Request, Response } from 'express'
 
 export class CalculationController {
-  private readonly calculationService: CalculationService
-
-  constructor () {
-    this.calculationService = new CalculationService(new CalculationRepository())
-  }
+  constructor (private readonly calculationService: CalculationService) {}
 
   async create (req: Request, res: Response): Promise<any> {
     try {

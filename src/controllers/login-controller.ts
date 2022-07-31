@@ -1,5 +1,4 @@
 import { RequestError } from '@/errors'
-import { UserRepository } from '@/repositories'
 import { LoginService } from '@/services'
 
 import { Request, Response } from 'express'

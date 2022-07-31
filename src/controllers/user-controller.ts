@@ -1,15 +1,10 @@
 import { NotAuhorizedError, RequestError } from '@/errors'
-import { UserRepository } from '@/repositories'
 import { UserService } from '@/services'
 
 import { Request, Response } from 'express'
 
 export class UserController {
-  private readonly userService: UserService
-
-  constructor () {
-    this.userService = new UserService(new UserRepository())
-  }
+  constructor (private readonly userService: UserService) {}
 
   async create (req: Request, res: Response): Promise<any> {
     try {

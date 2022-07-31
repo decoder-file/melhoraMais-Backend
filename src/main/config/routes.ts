@@ -1,15 +1,15 @@
 import express, { Router, json } from 'express'
 import cors from 'cors'
 
-import { UserController, CalculationController, TagCalculationController, LoginController} from '@/controllers'
+import { TagCalculationControllerFactory, UserControllerFactory, LoginControllerFactory, CalculationControllerFactory } from '@/main/factories/controllers'
 import { ensureAuthenticate } from '@/middlewares/ensure-authenticated'
 
 export const app = express()
 const router = Router()
-const userController = new UserController()
-const calculationController = new CalculationController()
-const tagCalculationController = new TagCalculationController()
-const loginController = new LoginController()
+const calculationController = CalculationControllerFactory()
+const loginController = LoginControllerFactory()
+const tagCalculationController = TagCalculationControllerFactory()
+const userController = UserControllerFactory()
 
 app.use(cors())
 app.use(json())
