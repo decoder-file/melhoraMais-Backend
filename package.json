@@ -10,7 +10,6 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest --passWithNoTests --no-cache --runInBand",
-    "test:watch": "npm t -- --watch",
     "test:staged": "npm t -- --findRelatedTests",
     "test:cov": "npm t -- --coverage",
     "typeorm": "typeorm-ts-node-commonjs",
