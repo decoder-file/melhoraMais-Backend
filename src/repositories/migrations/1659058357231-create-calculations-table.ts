@@ -1,7 +1,7 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm"
+import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
 export class createCalculationsTable1659058357231 implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<void> {
+  public async up (queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table(
         {
@@ -34,55 +34,55 @@ export class createCalculationsTable1659058357231 implements MigrationInterface 
             },
             {
               name: 'bash',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'entrance_weight',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'daily_cost',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'gmd',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'purchase_price',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'length_of_stay',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'output_weight',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'rc_initial',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'rc_end',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'sale_price',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'produced_price',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'return_on_capital',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'result',
-              type: 'varchar',
+              type: 'varchar'
             },
             {
               name: 'created_at',
@@ -101,7 +101,7 @@ export class createCalculationsTable1659058357231 implements MigrationInterface 
     )
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {
+  public async down (queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('calculations')
   }
 }
