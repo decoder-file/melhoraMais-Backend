@@ -1,15 +1,10 @@
 import { NotAuhorizedError, RequestError } from '@/errors'
-import { TagCalculationRepository } from '@/repositories'
 import { TagCalculationService } from '@/services'
 
 import { Request, Response } from 'express'
 
 export class TagCalculationController {
-  private readonly tagCalculationService: TagCalculationService
-
-  constructor () {
-    this.tagCalculationService = new TagCalculationService(new TagCalculationRepository())
-  }
+  constructor (private readonly tagCalculationService: TagCalculationService) {}
 
   async create (req: Request, res: Response): Promise<any> {
     try {
