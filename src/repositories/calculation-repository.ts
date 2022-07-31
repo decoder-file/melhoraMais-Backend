@@ -11,7 +11,7 @@ export class CalculationRepository {
   constructor () {
     this.calculations = mysqlSource.getRepository(CalculationEntity)
   }
-  
+
   async get (): Promise<CalculationEntity[]> {
     return await this.calculations.find()
   }

@@ -1,7 +1,7 @@
-import { CalculationRepository } from "@/repositories"
-import { CalculationService } from "@/services"
+import { CalculationRepository } from '@/repositories'
+import { CalculationService } from '@/services'
 
-import { calculationModel, mockCalculation } from "@/tests/mocks"
+import { calculationModel, mockCalculation } from '@/tests/mocks'
 
 jest.mock('node:crypto', () => ({
   randomUUID: jest.fn().mockImplementation(() => 'any-id')
@@ -13,12 +13,12 @@ describe('CalculationService', () => {
 
   jest
     .useFakeTimers()
-    .setSystemTime(new Date('2022-08-01'));
+    .setSystemTime(new Date('2022-08-01'))
 
   describe('create', () => {
     it('should be able to create calculation', async () => {
       calculationRepository.create = jest.fn()
-  
+
       await calculationService.create(mockCalculation)
 
       expect(calculationRepository.create).toHaveBeenNthCalledWith(1, mockCalculation)
@@ -43,7 +43,7 @@ describe('CalculationService', () => {
       const nonExistingId = 'non-existing-id'
 
       const promise = calculationService.update(nonExistingId, mockCalculation)
-  
+
       await expect(promise).rejects.toThrow(error)
       expect(calculationRepository.findById).toHaveBeenNthCalledWith(1, nonExistingId)
       expect(calculationRepository.update).not.toHaveBeenCalled()
@@ -104,7 +104,7 @@ describe('CalculationService', () => {
       const nonExistingId = 'non-existing-id'
 
       const promise = calculationService.delete(nonExistingId)
-  
+
       await expect(promise).rejects.toThrow(error)
       expect(calculationRepository.findById).toHaveBeenNthCalledWith(1, nonExistingId)
       expect(calculationRepository.delete).not.toHaveBeenCalled()

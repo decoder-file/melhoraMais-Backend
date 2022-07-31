@@ -1,7 +1,7 @@
-import { UserRepository } from "@/repositories"
-import { UserService } from "@/services"
+import { UserRepository } from '@/repositories'
+import { UserService } from '@/services'
 
-import { mockUser, userModel } from "@/tests/mocks"
+import { mockUser, userModel } from '@/tests/mocks'
 
 jest.mock('bcryptjs', () => ({
   hash: jest.fn().mockImplementation(() => 'any-hashed-password')
@@ -20,23 +20,23 @@ describe('UserService', () => {
     it('should be able to create user', async () => {
       userRepository.findByEmail = jest.fn()
       userRepository.create = jest.fn()
-  
+
       await userService.create(mockUser)
-  
+
       expect(userRepository.findByEmail).toHaveBeenNthCalledWith(1, mockUser.email)
       expect(userRepository.create).toHaveBeenNthCalledWith(1, {
         ...mockUser,
         password: hashedPassword
       })
     })
-  
+
     it('should not be able to create user with existing email', async () => {
       userRepository.findByEmail = jest.fn().mockResolvedValue(userModel)
       userRepository.create = jest.fn()
       const error = new Error('Usuário já existe.')
-  
+
       const promise = userService.create(mockUser)
-  
+
       await expect(promise).rejects.toThrow(error)
       expect(userRepository.findByEmail).toHaveBeenNthCalledWith(1, mockUser.email)
       expect(userRepository.create).not.toHaveBeenCalled()
@@ -61,7 +61,7 @@ describe('UserService', () => {
       const nonExistingId = 'non-existing-id'
 
       const promise = userService.update(nonExistingId, mockUser)
-  
+
       await expect(promise).rejects.toThrow(error)
       expect(userRepository.findById).toHaveBeenNthCalledWith(1, nonExistingId)
       expect(userRepository.update).not.toHaveBeenCalled()
@@ -86,7 +86,7 @@ describe('UserService', () => {
       const nonExistingId = 'non-existing-id'
 
       const promise = userService.delete(nonExistingId)
-  
+
       await expect(promise).rejects.toThrow(error)
       expect(userRepository.findById).toHaveBeenNthCalledWith(1, nonExistingId)
       expect(userRepository.delete).not.toHaveBeenCalled()

@@ -1,8 +1,8 @@
-import { RequestError } from "@/errors"
-import { TagCalculationRepository } from "@/repositories"
-import { TagCalculationService } from "@/services"
+import { RequestError } from '@/errors'
+import { TagCalculationRepository } from '@/repositories'
+import { TagCalculationService } from '@/services'
 
-import { mockTagCalculation, tagCalculationModel } from "@/tests/mocks"
+import { mockTagCalculation, tagCalculationModel } from '@/tests/mocks'
 
 describe('TagCalculationService', () => {
   const tagCalculationRepository = {} as TagCalculationRepository
@@ -10,12 +10,12 @@ describe('TagCalculationService', () => {
 
   jest
     .useFakeTimers()
-    .setSystemTime(new Date('2022-08-01'));
+    .setSystemTime(new Date('2022-08-01'))
 
   describe('create', () => {
     it('should be able to create calculation', async () => {
       tagCalculationRepository.create = jest.fn()
-  
+
       await tagCalculationService.create(mockTagCalculation)
 
       expect(tagCalculationRepository.create).toHaveBeenNthCalledWith(1, mockTagCalculation)
@@ -40,7 +40,7 @@ describe('TagCalculationService', () => {
       const nonExistingId = 'non-existing-id'
 
       const promise = tagCalculationService.update(nonExistingId, mockTagCalculation)
-  
+
       await expect(promise).rejects.toThrow(error)
       expect(tagCalculationRepository.findById).toHaveBeenNthCalledWith(1, nonExistingId)
       expect(tagCalculationRepository.update).not.toHaveBeenCalled()
@@ -101,7 +101,7 @@ describe('TagCalculationService', () => {
       const nonExistingId = 'non-existing-id'
 
       const promise = tagCalculationService.delete(nonExistingId)
-  
+
       await expect(promise).rejects.toThrow(error)
       expect(tagCalculationRepository.findById).toHaveBeenNthCalledWith(1, nonExistingId)
       expect(tagCalculationRepository.delete).not.toHaveBeenCalled()

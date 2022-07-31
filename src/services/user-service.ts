@@ -37,6 +37,6 @@ export class UserService {
   }
 
   public async encrypt (password: string): Promise<string> {
-    return hash(password, env.encrypt.salt);
+    return hash(password, env.encrypt.salt)
   }
 }

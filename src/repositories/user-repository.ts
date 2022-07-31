@@ -16,7 +16,7 @@ export class UserRepository {
   async get (): Promise<UserEntity[]> {
     return await this.users.find()
   }
-  
+
   async create (params: UserDTO): Promise<void> {
     await this.users.save({
       id: randomUUID(),

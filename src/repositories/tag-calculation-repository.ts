@@ -11,7 +11,7 @@ export class TagCalculationRepository {
   constructor () {
     this.tagCalculations = mysqlSource.getRepository(TagCalculationEntity)
   }
-  
+
   async get (): Promise<TagCalculationEntity[]> {
     return await this.tagCalculations.find()
   }

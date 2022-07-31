@@ -1,8 +1,8 @@
-import { RequestError } from "@/errors"
-import { UserRepository } from "@/repositories"
-import { LoginService } from "@/services"
+import { RequestError } from '@/errors'
+import { UserRepository } from '@/repositories'
+import { LoginService } from '@/services'
 
-import { userModel } from "@/tests/mocks"
+import { userModel } from '@/tests/mocks'
 
 jest.mock('bcryptjs', () => ({
   compare: jest.fn().mockResolvedValueOnce(true)
@@ -21,7 +21,7 @@ describe('LoginService', () => {
   describe('login', () => {
     it('should be able to generate both access_token and refresh_token', async () => {
       userRepository.findByEmail = jest.fn().mockResolvedValue(userModel)
-  
+
       const response = await loginService.login(userModel)
 
       expect(userRepository.findByEmail).toHaveBeenNthCalledWith(1, userModel.email)
@@ -32,7 +32,7 @@ describe('LoginService', () => {
     it('should not be able to generate both access_token and refresh_token if user not found', async () => {
       const error = new RequestError('Usuário/senha inválido.')
       userRepository.findByEmail = jest.fn()
-  
+
       const promise = loginService.login(userModel)
 
       await expect(promise).rejects.toThrow(error)
@@ -44,7 +44,7 @@ describe('LoginService', () => {
     it('should not be able to generate both access_token and refresh_token if password not match', async () => {
       const error = new RequestError('Usuário/senha inválido.')
       userRepository.findByEmail = jest.fn().mockResolvedValue(userModel)
-  
+
       const promise = loginService.login({ email: userModel.email, password: 'invalid-password' })
 
       await expect(promise).rejects.toThrow(error)

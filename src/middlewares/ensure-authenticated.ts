@@ -1,4 +1,3 @@
-import { NotAuhorizedError } from '@/errors'
 import { env } from '@/main/config/env'
 
 import { Request, Response, NextFunction } from 'express'
