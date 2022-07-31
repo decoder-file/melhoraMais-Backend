@@ -1,7 +1,7 @@
 import { TagCalculationController } from '@/controllers'
 import { NotAuhorizedError, RequestError } from '@/errors'
 import { TagCalculationService } from '@/services'
-import { tagCalculationModel } from '@/tests/mocks'
+import { mockTagCalculation, tagCalculationModel } from '@/tests/mocks'
 
 import { Request, Response } from 'express'
 import { mock } from 'jest-mock-extended'
@@ -22,7 +22,7 @@ describe('TagCalculationController', () => {
   })
 
   beforeEach(() => {
-    req.body = { email: 'any-email@mail.com', password: 'any-password' }
+    req.body = { ...mockTagCalculation }
     req.params = { id: 'any-id' }
   })
 
