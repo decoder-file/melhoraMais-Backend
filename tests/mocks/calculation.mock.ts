@@ -2,6 +2,7 @@ import { CalculationModel } from '@/models'
 import { CalculationDTO } from '@/dtos'
 
 export const mockCalculation: CalculationDTO = {
+  tag: 'any-tag',
   title: 'any-title',
   description: 'any-description',
   bash: 'any-bash',
