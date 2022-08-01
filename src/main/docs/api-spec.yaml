@@ -1,0 +1,759 @@
+swagger: "2.0"
+info:
+  description: "Gado API"
+  version: "2.0"
+  title: "Gado API"
+tags:
+  - name: "Login"
+    description: "Login"
+  - name: "Users"
+    description: "Users"
+  - name: "Calculations"
+    description: "Calculations"
+  - name: "TagCalculations"
+    description: "TagCalculations"
+schemes:
+  - "http"
+  - "https"
+parameters:
+  id:
+    name: "id"
+    description: "Identificador do recurso"
+    required: true
+    in: "path"
+    type: string
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    in: header
+    name: authorization
+paths:
+  /login:
+    post:
+      tags:
+        - "Login"
+      summary: Efetuar login
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Efetuar login"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginPayload"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/LoginResponse"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        422:
+          description: Unprocessable Entity
+        500:
+          description: Internal server error
+  /users:
+    post:
+      tags:
+        - "Users"
+      summary: Criar um novo usuário
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Criar novo usuário"
+          required: true
+          schema:
+            $ref: "#/definitions/UserPayload"
+      responses:
+        201:
+          description: Successful operation
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        422:
+          description: Unprocessable Entity
+        500:
+          description: Internal server error
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Users"
+      summary: "Retorna todos os usuários cadastrados"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UsersResponse"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+  /users/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Users"
+      summary: "Retorna um usuário específico"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/id"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/UsersResponse"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: Not found
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - "Users"
+      summary: Atualizar um usuário
+      consumes:
+        - application/json
+      parameters:
+        - $ref: "#/parameters/id"
+        - in: "body"
+          name: "body"
+          description: "Atualizar usuário"
+          required: true
+          schema:
+            $ut: "#/definitions/UserPayload"
+      responses:
+        201:
+          description: Successful operation
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: Not Found
+        500:
+          description: Internal server error
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - "Users"
+      summary: Deletar um usuário
+      consumes:
+        - application/json
+      parameters:
+        - $ref: "#/parameters/id"
+      responses:
+        201:
+          description: Successful operation
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: Not Found
+        500:
+          description: Internal server error
+  
+  /calculations:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - "Calculations"
+      summary: Criar novo calculation
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Criar novo calculation"
+          required: true
+          schema:
+            $ref: "#/definitions/CalculationPayload"
+      responses:
+        201:
+          description: Successful operation
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        422:
+          description: Unprocessable Entity
+        500:
+          description: Internal server error
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Calculations"
+      summary: "Retorna todos os calculations cadastrados"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UsersResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+  
+  /calculations/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Calculations"
+      summary: "Retorna um calculation específico"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/id"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/CalculationsResponse"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: Not found
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - "Calculations"
+      summary: Atualizar um calculation
+      consumes:
+        - application/json
+      parameters:
+        - $ref: "#/parameters/id"
+        - in: "body"
+          name: "body"
+          description: "Atualizar calculation"
+          required: true
+          schema:
+            $ref: "#/definitions/CalculationPayload"
+      responses:
+        201:
+          description: Successful operation
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: Not Found
+        500:
+          description: Internal server error
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - "Calculations"
+      summary: Deletar um calculation
+      consumes:
+        - application/json
+      parameters:
+        - $ref: "#/parameters/id"
+      responses:
+        201:
+          description: Successful operation
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: Not Found
+        500:
+          description: Internal server error
+
+  /tag-calculations:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - "TagCalculations"
+      summary: Criar nova tag
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Criar nova tag"
+          required: true
+          schema:
+            $ref: "#/definitions/TagCalculationPayload"
+      responses:
+        201:
+          description: Successful operation
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        422:
+          description: Unprocessable Entity
+        500:
+          description: Internal server error
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "TagCalculations"
+      summary: "Retorna todas as tags"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/TagCalculationsResponse"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: Not found
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+
+  /tag-calculations/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "TagCalculations"
+      summary: "Retorna um tag-calculation específico"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/id"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/TagCalculationsResponse"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: Not found
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - "TagCalculations"
+      summary: Atualizar um tag-calculation
+      consumes:
+        - application/json
+      parameters:
+        - $ref: "#/parameters/id"
+        - in: "body"
+          name: "body"
+          description: "Atualizar tag-calculation"
+          required: true
+          schema:
+            $ref: "#/definitions/TagCalculationPayload"
+      responses:
+        201:
+          description: Successful operation
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: Not Found
+        500:
+          description: Internal server error
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - "TagCalculations"
+      summary: Deletar um tag-calculation
+      consumes:
+        - application/json
+      parameters:
+        - $ref: "#/parameters/id"
+      responses:
+        201:
+          description: Successful operation
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        404:
+          description: Not Found
+        500:
+          description: Internal server error
+
+definitions:
+  LoginPayload:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+        description: 'E-mail do usuário'
+        example: 'yan@gmail.com'
+      password:
+        type: string
+        description: 'Senha do usuário'
+        example: '123'
+
+  UserPayload:
+    type: object
+    required:
+      - name
+      - email
+      - password
+    properties:
+      name:
+        type: string
+        description: 'Nome do usuário'
+        example: 'John Doe'
+      email:
+        type: string
+        description: 'E-mail do usuário'
+        example: 'john@doe.com'
+      password:
+        type: string
+        description: 'Senha do usuário'
+        example: 'john-doe-123'
+
+  CalculationPayload:
+    type: object
+    required:
+      - bash
+      - entranceWeight
+      - dailyCost
+      - gmd
+      - purchasePrice
+      - lengthOfStay
+      - outputWeight
+      - rcInitial
+      - rcEnd
+      - salePrice
+      - producedPrice
+      - returnOnCapital
+      - result
+    properties:
+      tag:
+        type: string
+        description: 'Nome do usuário'
+        example: 'John Doe'
+      title:
+        type: string
+        description: 'E-mail do usuário'
+        example: 'john@doe.com'
+      description:
+        type: string
+        description: 'Senha do usuário'
+        example: 'john-doe-123'
+      bash:
+        type: string
+        description: 'Nome do usuário'
+        example: 'John Doe'
+      entranceWeight:
+        type: string
+        description: 'E-mail do usuário'
+        example: 'john@doe.com'
+      dailyCost:
+        type: string
+        description: 'Senha do usuário'
+        example: 'john-doe-123'
+      gmd:
+        type: string
+        description: 'Nome do usuário'
+        example: 'John Doe'
+      purchasePrice:
+        type: string
+        description: 'E-mail do usuário'
+        example: 'john@doe.com'
+      lengthOfStay:
+        type: string
+        description: 'Senha do usuário'
+        example: 'john-doe-123'
+      outputWeight:
+        type: string
+        description: 'Nome do usuário'
+        example: 'John Doe'
+      rcInitial:
+        type: string
+        description: 'E-mail do usuário'
+        example: 'john@doe.com'
+      rcEnd:
+        type: string
+        description: 'Senha do usuário'
+        example: 'john-doe-123'
+      salePrice:
+        type: string
+        description: 'Nome do usuário'
+        example: 'John Doe'
+      producedPrice:
+        type: string
+        description: 'E-mail do usuário'
+        example: 'john@doe.com'
+      returnOnCapital:
+        type: string
+        description: 'Senha do usuário'
+        example: 'john-doe-123'
+      result:
+        type: string
+        description: 'Senha do usuário'
+        example: 'john-doe-123'
+
+  TagCalculationPayload:
+    type: object
+    required:
+      - title
+      - color
+    properties:
+      title:
+        type: string
+        description: 'Título da tag'
+        example: 'Tag de bois'
+      description:
+        type: string
+        description: 'Cor da tag'
+        example: 'Azul'
+
+  Error:
+    type: object
+    required:
+      - "message"
+    properties:
+      message:
+        type: "string"
+        description: "Description message of the given error"
+        example: "Unexpected error"
+
+  UnauthorizedError:
+    type: object
+    required:
+      - "message"
+    properties:
+      message:
+        type: "string"
+        description: "UnauthorizedErrorError"
+        example: "Token is missing"
+
+  LoginResponse:
+    type: object
+    required:
+      - access_token
+      - refresh_token
+    properties:
+      access_token:
+        type: number
+        description: "Token de acesso"
+        example: "a78sha87hs7a7s8-as7ag7s8a"
+      refresh_token:
+        type: string
+        description: "Refresh token"
+        example: "cuHAUSHAUhuchuc-w74677"
+
+  UsersResponse:
+    type: object
+    required:
+      - id
+      - name
+      - email
+      - created_at
+      - updated_at
+    properties:
+      id:
+        type: string
+        description: "ID do usuário"
+        example: "172428a-vybvbu"
+      name:
+        type: string
+        description: "Nome do usuário"
+        example: "John Doe"
+      email:
+        type: string
+        description: "E-mail do usuário"
+      created_at:
+        type: string
+        example: "2021-11-18 00:00:00"
+      updated_at:
+        type: string
+        example: "2021-11-18 00:00:00"
+
+  CalculationsResponse:
+    type: object
+    required:
+      - id
+      - tag
+      - title
+      - description
+      - bash
+      - entranceWeight
+      - dailyCost
+      - gmd
+      - purchasePrice
+      - lengthOfStay
+      - outputWeight
+      - rcInitial
+      - rcEnd
+      - salePrice
+      - producedPrice
+      - returnOnCapital
+      - result
+      - created_at
+      - updated_at
+    properties:
+      id:
+        type: string
+        description: "ID do calculation"
+        example: "172428a-vybvbu"
+      tag:
+        type: string
+        description: "Nome da tag"
+        example: "tag"
+      title:
+        type: string
+        description: "Título da tag"
+        example: "Algum título da tag"
+      description:
+        type: string
+        description: "Descrição da tag"
+        example: "Descrição da tag"
+      bash:
+        type: string
+        description: "Bash da tag"
+        example: "bash"
+      entranceWeight:
+        type: string
+        description: "Peso de entrada"
+        example: "150kg"
+      dailyCost:
+        type: string
+        description: "Custo diário"
+        example: "R$ 120"
+      gmd:
+        type: string
+        description: "GMD"
+        example: "GMD"
+      purchasePrice:
+        type: string
+        description: "Preço de compra"
+        example: "R$ 120"
+      lengthOfStay:
+        type: string
+        description: "Tempo de estadia"
+        example: "1 semana"
+      outputWeight:
+        type: string
+        description: "Peso de saída"
+        example: "100kg"
+      rcInitial:
+        type: string
+        description: "RC inicial"
+        example: "123"
+      rcEnd:
+        type: string
+        description: "RC final"
+        example: "123"
+      salePrice:
+        type: string
+        description: "Preço de venda"
+        example: "R$ 120"
+      producedPrice:
+        type: string
+        description: "Preço de produção"
+        example: "R$ 120"
+      returnOnCapital:
+        type: string
+        description: "Retorno de capital"
+        example: "R$ 150"
+      result:
+        type: string
+        description: "Resultado"
+        example: "123"
+      created_at:
+        type: string
+        example: "2021-11-18 00:00:00"
+      updated_at:
+        type: string
+        example: "2021-11-18 00:00:00"
+
+  TagCalculationsResponse:
+    type: object
+    required:
+      - id
+      - title
+      - color
+      - created_at
+      - updated_at
+    properties:
+      id:
+        type: string
+        description: "ID da tag"
+        example: "172428a-vybvbu"
+      title:
+        type: string
+        description: "Título da tag"
+        example: "John Doe"
+      color:
+        type: string
+        description: "Cor da tag"
+      created_at:
+        type: string
+        example: "2021-11-18 00:00:00"
+      updated_at:
+        type: string
+        example: "2021-11-18 00:00:00"
+
+
