@@ -1,7 +1,6 @@
 swagger: "2.0"
 info:
-  description: "Gado API"
-  version: "2.0"
+  version: "1.0"
   title: "Gado API"
 tags:
   - name: "Login"
@@ -25,7 +24,7 @@ parameters:
 securityDefinitions:
   Bearer:
     type: apiKey
-    in: header
+    scheme: bearer
     name: authorization
 paths:
   /login:
@@ -446,7 +445,7 @@ definitions:
       email:
         type: string
         description: 'E-mail do usuário'
-        example: 'yan@gmail.com'
+        example: 'johndoe@gmail.com'
       password:
         type: string
         description: 'Senha do usuário'

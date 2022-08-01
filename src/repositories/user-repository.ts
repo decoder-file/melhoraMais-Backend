@@ -1,10 +1,9 @@
-import { randomUUID } from 'node:crypto'
-
 import { UserDTO } from '@/dtos'
 import { UserEntity } from '@/repositories/entities'
 import { mysqlSource } from '@/repositories/mysql-connection'
 
 import { Repository } from 'typeorm'
+import { UserModel } from '@/models'
 
 export class UserRepository {
   private readonly users: Repository<UserEntity>
@@ -18,10 +17,8 @@ export class UserRepository {
   }
 
   async create (params: UserDTO): Promise<void> {
-    await this.users.save({
-      id: randomUUID(),
-      ...params
-    })
+    const user = new UserModel(params)
+    await this.users.save(user)
   }
 
   async update (user: UserEntity, params: UserDTO): Promise<void> {
