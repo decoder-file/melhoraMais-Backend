@@ -7,16 +7,19 @@ jest.mock('bcryptjs', () => ({
   hash: jest.fn().mockImplementation(() => 'any-hashed-password')
 }))
 
+jest.mock('node:crypto', () => ({
+  randomUUID: jest.fn().mockImplementation(() => 'any-id')
+}))
+
+jest
+  .useFakeTimers('modern')
+  .setSystemTime(new Date('2022-08-01T00:00:00.000Z'))
+
 describe('UserService', () => {
   const userRepository = {} as UserRepository
   const userService = new UserService(userRepository)
-  const hashedPassword = 'any-hashed-password'
 
   describe('create', () => {
-    jest.mock('bcryptjs', () => ({
-      hash: jest.fn().mockResolvedValue(hashedPassword)
-    }))
-
     it('should be able to create user', async () => {
       userRepository.findByEmail = jest.fn()
       userRepository.create = jest.fn()
@@ -25,8 +28,8 @@ describe('UserService', () => {
 
       expect(userRepository.findByEmail).toHaveBeenNthCalledWith(1, mockUser.email)
       expect(userRepository.create).toHaveBeenNthCalledWith(1, {
-        ...mockUser,
-        password: hashedPassword
+        ...userModel,
+        updated_at: null
       })
     })
 
@@ -51,7 +54,7 @@ describe('UserService', () => {
       await userService.update('any-id', mockUser)
 
       expect(userRepository.findById).toHaveBeenNthCalledWith(1, userModel.id)
-      expect(userRepository.update).toHaveBeenNthCalledWith(1, userModel, mockUser)
+      expect(userRepository.update).toHaveBeenNthCalledWith(1, userModel)
     })
 
     it('should not be able to update an non-existing user', async () => {

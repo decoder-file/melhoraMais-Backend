@@ -3,7 +3,6 @@ import { UserEntity } from '@/repositories/entities'
 import { mysqlSource } from '@/repositories/mysql-connection'
 
 import { Repository } from 'typeorm'
-import { UserModel } from '@/models'
 
 export class UserRepository {
   private readonly users: Repository<UserEntity>
@@ -13,19 +12,19 @@ export class UserRepository {
   }
 
   async get (): Promise<UserEntity[]> {
-    return await this.users.find()
+    return await this.users.find({
+      select: [
+        'id', 'name', 'email', 'created_at', 'updated_at'
+      ]
+    })
   }
 
   async create (params: UserDTO): Promise<void> {
-    const user = new UserModel(params)
-    await this.users.save(user)
+    await this.users.save(params)
   }
 
-  async update (user: UserEntity, params: UserDTO): Promise<void> {
-    await this.users.update({ id: user.id }, {
-      updatedAt: new Date(),
-      ...params
-    })
+  async update (user: UserEntity): Promise<void> {
+    await this.users.update({ id: user.id }, user)
   }
 
   async delete (id: string): Promise<void> {

@@ -14,9 +14,9 @@ export class UserEntity {
   @Column()
   password!: string
 
-  @Column({ name: 'created_at' })
-  createdAt!: Date
+  @Column()
+  created_at!: Date
 
-  @Column({ name: 'updated_at', nullable: true })
-  updatedAt!: Date
+  @Column({ nullable: true })
+  updated_at!: Date
 }

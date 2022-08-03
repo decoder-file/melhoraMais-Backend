@@ -11,7 +11,9 @@ export class UserModel {
   updated_at: Date | null
 
   constructor (user: UserDTO) {
-    if (!this.id) randomUUID()
+    if (!this.id) {
+      this.id = randomUUID()
+    }
     this.name = user.name
     this.email = user.email
     this.password = user.password
