@@ -9,7 +9,9 @@ export class TagCalculationModel {
   created_at: Date
 
   constructor (tagCalculation: TagCalculationDTO) {
-    if (!this.id) randomUUID()
+    if (!this.id) {
+      this.id = randomUUID()
+    }
     this.title = tagCalculation.title
     this.color = tagCalculation.color
     this.created_at = new Date()

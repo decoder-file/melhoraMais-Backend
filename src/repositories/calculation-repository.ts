@@ -21,11 +21,8 @@ export class CalculationRepository {
     await this.calculations.save(calculation)
   }
 
-  async update (calculationId: string, params: CalculationDTO): Promise<void> {
-    await this.calculations.update({ id: calculationId }, {
-      updated_at: new Date(),
-      ...params
-    })
+  async update (calculation: CalculationEntity): Promise<void> {
+    await this.calculations.update({ id: calculation.id }, calculation)
   }
 
   async delete (id: string): Promise<void> {

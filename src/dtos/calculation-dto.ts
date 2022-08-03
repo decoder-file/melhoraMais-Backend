@@ -1,4 +1,5 @@
 export type CalculationDTO = {
+  id?: string
   tag?: string
   title?: string
   description?: string

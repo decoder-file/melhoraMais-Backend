@@ -1,5 +1,6 @@
 import { CalculationDTO } from '@/dtos'
 import { RequestError } from '@/errors'
+import { CalculationModel } from '@/models'
 import { CalculationRepository } from '@/repositories'
 import { CalculationEntity } from '@/repositories/entities'
 
@@ -21,7 +22,13 @@ export class CalculationService {
   async update (id: string, params: CalculationDTO): Promise<void> {
     const calculationExists = await this.calculationRepository.findById(id)
     if (!calculationExists) throw new RequestError('Calculation não existe.')
-    await this.calculationRepository.update(calculationExists.id, params)
+    const calculation = new CalculationModel(params)
+    const calculationToUpdate = {
+      ...calculation,
+      id: calculationExists.id,
+      updated_at: new Date()
+    }
+    await this.calculationRepository.update(calculationToUpdate)
   }
 
   async delete (id: string): Promise<void> {

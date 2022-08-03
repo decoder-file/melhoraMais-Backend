@@ -19,10 +19,12 @@ export class CalculationModel {
   produced_price: string
   return_on_capital: string
   result: string
-  created_at?: Date
+  created_at: Date
 
   constructor (calculation: CalculationDTO) {
-    if (!this.id) randomUUID()
+    if (!this.id) {
+      this.id = randomUUID()
+    }
     this.tag = calculation.tag
     this.title = calculation.title
     this.description = calculation.description

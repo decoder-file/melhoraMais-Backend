@@ -33,7 +33,10 @@ describe('CalculationService', () => {
       await calculationService.update(calculationModel.id!, mockCalculation)
 
       expect(calculationRepository.findById).toHaveBeenNthCalledWith(1, calculationModel.id)
-      expect(calculationRepository.update).toHaveBeenNthCalledWith(1, calculationModel.id, mockCalculation)
+      expect(calculationRepository.update).toHaveBeenNthCalledWith(1, {
+        ...calculationModel,
+        updated_at: new Date()
+      })
     })
 
     it('should not be able to update an non-existing calculation', async () => {
