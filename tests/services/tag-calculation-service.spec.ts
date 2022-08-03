@@ -30,7 +30,10 @@ describe('TagCalculationService', () => {
       await tagCalculationService.update('any-id', mockTagCalculation)
 
       expect(tagCalculationRepository.findById).toHaveBeenNthCalledWith(1, tagCalculationModel.id)
-      expect(tagCalculationRepository.update).toHaveBeenNthCalledWith(1, tagCalculationModel, mockTagCalculation)
+      expect(tagCalculationRepository.update).toHaveBeenNthCalledWith(1, {
+        ...tagCalculationModel,
+        updated_at: new Date()
+      })
     })
 
     it('should not be able to update an non-existing tag-calculation', async () => {

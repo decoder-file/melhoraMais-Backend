@@ -20,8 +20,7 @@ export class createTagCalculationsTable1659105564941 implements MigrationInterfa
             },
             {
               name: 'color',
-              type: 'varchar',
-              isUnique: true
+              type: 'varchar'
             },
             {
               name: 'created_at',

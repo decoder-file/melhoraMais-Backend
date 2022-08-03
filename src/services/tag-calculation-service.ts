@@ -1,5 +1,6 @@
 import { TagCalculationDTO } from '@/dtos'
 import { RequestError } from '@/errors'
+import { TagCalculationModel } from '@/models'
 import { TagCalculationRepository } from '@/repositories'
 import { TagCalculationEntity } from '@/repositories/entities'
 
@@ -19,9 +20,15 @@ export class TagCalculationService {
   }
 
   async update (id: string, params: TagCalculationDTO): Promise<void> {
-    const tagCalculation = await this.tagCalculationRepository.findById(id)
-    if (!tagCalculation) throw new RequestError('TagCalculation não existe.')
-    await this.tagCalculationRepository.update(tagCalculation, params)
+    const tagCalculationExists = await this.tagCalculationRepository.findById(id)
+    if (!tagCalculationExists) throw new RequestError('TagCalculation não existe.')
+    const tagCalculation = new TagCalculationModel(params)
+    const tagCalculationToUpdate = {
+      ...tagCalculation,
+      id: tagCalculationExists.id,
+      updated_at: new Date()
+    }
+    await this.tagCalculationRepository.update(tagCalculationToUpdate)
   }
 
   async delete (id: string): Promise<void> {

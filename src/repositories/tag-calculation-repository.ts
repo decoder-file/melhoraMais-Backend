@@ -21,12 +21,8 @@ export class TagCalculationRepository {
     await this.tagCalculations.save(tagCalculation)
   }
 
-  async update (tagCalculation: TagCalculationEntity, params: TagCalculationDTO): Promise<void> {
-    const tagCalculationObject = new TagCalculationModel(params)
-    await this.tagCalculations.update({ id: tagCalculation.id }, {
-      updated_at: new Date(),
-      ...tagCalculationObject
-    })
+  async update (tagCalculation: TagCalculationEntity): Promise<void> {
+    await this.tagCalculations.update({ id: tagCalculation.id }, tagCalculation)
   }
 
   async delete (id: string): Promise<void> {
