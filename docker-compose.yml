@@ -2,9 +2,10 @@ version: "3"
 
 services:
   mysql:
-    # platform: linux/x86_64 => uncomment this line to run on macOS M1
+    # uncomment `platform` line to run on macOS M1
+    platform: linux/x86_64
     container_name: mysql-container
-    image: mysql
+    image: mysql:8.0-debian
     env_file:
       - .env
     ports:

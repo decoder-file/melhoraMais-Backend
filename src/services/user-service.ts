@@ -3,7 +3,7 @@ import { RequestError } from '@/errors'
 import { UserModel } from '@/models'
 import { UserRepository } from '@/repositories'
 import { UserEntity } from '@/repositories/entities'
-import { env } from '@/main/config/env'
+import { environment } from '@/main/config'
 
 import { hash } from 'bcryptjs'
 
@@ -48,6 +48,6 @@ export class UserService {
   }
 
   public async encrypt (password: string): Promise<string> {
-    return hash(password, env.encrypt.salt)
+    return hash(password, environment.encrypt.salt)
   }
 }

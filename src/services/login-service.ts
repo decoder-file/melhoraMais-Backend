@@ -1,6 +1,6 @@
 import { LoginDTO, LoginResponseDTO } from '@/dtos'
 import { RequestError } from '@/errors'
-import { env } from '@/main/config/env'
+import { environment } from '@/main/config'
 import { UserRepository } from '@/repositories'
 import { UserEntity } from '@/repositories/entities'
 
@@ -20,14 +20,14 @@ export class LoginService {
   private async checkPassword (password: string, user: UserEntity): Promise<LoginResponseDTO> {
     const passwordMatched = await compare(password, user.password)
     if (!passwordMatched) throw new RequestError('Usuário/senha inválido.')
-    const access_token = sign({}, String(env.jwt.secret), {
+    const access_token = sign({}, String(environment.jwt.secret), {
       subject: user.id,
-      expiresIn: env.jwt.expiresIn
+      expiresIn: environment.jwt.expiresIn
     })
     const userEmail = user.email
-    const refresh_token = sign({ userEmail }, String(env.jwt.refreshSecretToken), {
+    const refresh_token = sign({ userEmail }, String(environment.jwt.refreshSecretToken), {
       subject: user.id,
-      expiresIn: env.jwt.refreshTokenExpiresIn
+      expiresIn: environment.jwt.refreshTokenExpiresIn
     })
     return {
       access_token,

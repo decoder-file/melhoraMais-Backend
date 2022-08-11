@@ -1,4 +1,4 @@
-import { env } from '@/main/config/env'
+import { environment } from '@/main/config'
 
 import { Request, Response, NextFunction } from 'express'
 import { verify } from 'jsonwebtoken'
@@ -10,7 +10,7 @@ export function ensureAuthenticated (req: Request, res: Response, next: NextFunc
   if (!authHeader) return res.status(401).json({ message: 'Token is missing.' })
   const [, token] = authHeader.split(' ')
   try {
-    const { sub: user_id } = verify(token, env.jwt.secret) as IPayload
+    const { sub: user_id } = verify(token, environment.jwt.secret) as IPayload
     req.user = { id: user_id }
     next()
   } catch (err) {
