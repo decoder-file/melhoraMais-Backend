@@ -6,7 +6,7 @@ import { Request, Response } from 'express'
 export class CalculationController {
   constructor (private readonly calculationService: CalculationService) {}
 
-  async create (req: Request, res: Response): Promise<any> {
+  async create (req: Request, res: Response): Promise<void> {
     try {
       await this.calculationService.create(req.body)
       res.sendStatus(200)
@@ -15,7 +15,7 @@ export class CalculationController {
     }
   }
 
-  async update (req: Request, res: Response): Promise<any> {
+  async update (req: Request, res: Response): Promise<void> {
     try {
       await this.calculationService.update(req.params.id, req.body)
       res.sendStatus(200)
@@ -24,7 +24,7 @@ export class CalculationController {
     }
   }
 
-  async get (_: Request, res: Response): Promise<any> {
+  async get (_: Request, res: Response): Promise<void> {
     try {
       const calculations = await this.calculationService.get()
       res.status(200).json(calculations)
@@ -33,7 +33,7 @@ export class CalculationController {
     }
   }
 
-  async getById (req: Request, res: Response): Promise<any> {
+  async getById (req: Request, res: Response): Promise<void> {
     try {
       const calculation = await this.calculationService.getById(req.params.id)
       res.status(200).json(calculation)
@@ -42,7 +42,7 @@ export class CalculationController {
     }
   }
 
-  async delete (req: Request, res: Response): Promise<any> {
+  async delete (req: Request, res: Response): Promise<void> {
     try {
       await this.calculationService.delete(req.params.id)
       res.sendStatus(200)
