@@ -29,9 +29,12 @@ export class LoginService {
       subject: user.id,
       expiresIn: environment.jwt.refreshTokenExpiresIn
     })
+    const userWithoutPassword: Partial<UserEntity> = user
+    delete userWithoutPassword.password
     return {
       access_token,
-      refresh_token
+      refresh_token,
+      user: userWithoutPassword
     }
   }
 }

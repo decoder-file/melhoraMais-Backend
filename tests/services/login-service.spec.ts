@@ -25,6 +25,7 @@ describe('LoginService', () => {
       const response = await loginService.login(userModel)
 
       expect(userRepository.findByEmail).toHaveBeenNthCalledWith(1, userModel.email)
+      expect(response.user).toEqual(userModel)
       expect(response.access_token).toEqual('any-generated-token')
       expect(response.refresh_token).toEqual('any-generated-refresh-token')
     })
