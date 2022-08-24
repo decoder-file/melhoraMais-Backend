@@ -15,6 +15,9 @@ export class UserEntity {
   password!: string
 
   @Column()
+  location!: string
+
+  @Column()
   created_at!: Date
 
   @Column({ nullable: true })

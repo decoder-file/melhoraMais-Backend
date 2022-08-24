@@ -6,7 +6,7 @@ import { Request, Response } from 'express'
 export class UserController {
   constructor (private readonly userService: UserService) {}
 
-  async create (req: Request, res: Response): Promise<any> {
+  async create (req: Request, res: Response): Promise<void> {
     try {
       await this.userService.create(req.body)
       res.sendStatus(200)
@@ -15,7 +15,7 @@ export class UserController {
     }
   }
 
-  async update (req: Request, res: Response): Promise<any> {
+  async update (req: Request, res: Response): Promise<void> {
     try {
       await this.userService.update(req.params.id, req.body)
       res.sendStatus(200)
@@ -24,7 +24,7 @@ export class UserController {
     }
   }
 
-  async getById (req: Request, res: Response): Promise<any> {
+  async getById (req: Request, res: Response): Promise<void> {
     try {
       const user = await this.userService.getById(req.params.id)
       res.status(200).json(user)
@@ -33,7 +33,7 @@ export class UserController {
     }
   }
 
-  async delete (req: Request, res: Response): Promise<any> {
+  async delete (req: Request, res: Response): Promise<void> {
     try {
       await this.userService.delete(req.params.id)
       res.sendStatus(200)
@@ -42,7 +42,7 @@ export class UserController {
     }
   }
 
-  async get (_: Request, res: Response): Promise<any> {
+  async get (_: Request, res: Response): Promise<void> {
     try {
       const users = await this.userService.get()
       res.status(200).json(users)

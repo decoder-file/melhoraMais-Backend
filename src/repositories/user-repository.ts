@@ -14,7 +14,7 @@ export class UserRepository {
   async get (): Promise<UserEntity[]> {
     return await this.users.find({
       select: [
-        'id', 'name', 'email', 'created_at', 'updated_at'
+        'id', 'name', 'email', 'location', 'created_at', 'updated_at'
       ]
     })
   }

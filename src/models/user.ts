@@ -7,6 +7,7 @@ export class UserModel {
   name: string
   email: string
   password: string
+  location: string
   created_at: Date
   updated_at: Date | null
 
@@ -17,6 +18,7 @@ export class UserModel {
     this.name = user.name
     this.email = user.email
     this.password = user.password
+    this.location = user.location
     this.created_at = new Date()
     this.updated_at = null
   }
