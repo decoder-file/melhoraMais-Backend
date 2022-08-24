@@ -23,8 +23,8 @@ parameters:
     type: string
 securityDefinitions:
   Bearer:
+    in: header
     type: apiKey
-    scheme: bearer
     name: authorization
 paths:
   /login:
@@ -147,7 +147,7 @@ paths:
           description: "Atualizar usuário"
           required: true
           schema:
-            $ut: "#/definitions/UserPayload"
+            $ref: "#/definitions/UserPayload"
       responses:
         201:
           description: Successful operation
@@ -470,6 +470,10 @@ definitions:
         type: string
         description: 'Senha do usuário'
         example: 'john-doe-123'
+      location:
+        type: string
+        description: 'Localização do usuário'
+        example: 'Brasil'
 
   CalculationPayload:
     type: object
@@ -593,6 +597,7 @@ definitions:
     required:
       - access_token
       - refresh_token
+      - user
     properties:
       access_token:
         type: number
@@ -602,6 +607,8 @@ definitions:
         type: string
         description: "Refresh token"
         example: "cuHAUSHAUhuchuc-w74677"
+      user:
+        $ref: "#/definitions/UsersResponse"
 
   UsersResponse:
     type: object
@@ -609,6 +616,7 @@ definitions:
       - id
       - name
       - email
+      - location
       - created_at
       - updated_at
     properties:
@@ -623,6 +631,9 @@ definitions:
       email:
         type: string
         description: "E-mail do usuário"
+      location:
+        type: string
+        description: "Localização do usuário"
       created_at:
         type: string
         example: "2021-11-18 00:00:00"
