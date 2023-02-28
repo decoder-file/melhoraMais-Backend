@@ -13,7 +13,7 @@ const calculationController = CalculationControllerFactory()
 const loginController = LoginControllerFactory()
 const tagCalculationController = TagCalculationControllerFactory()
 const userController = UserControllerFactory()
-const swaggerDocument = YAML.load(resolve(__dirname, '../docs/api-spec.yaml'))
+const swaggerDocument = YAML.load(resolve(__dirname, '../../../api-spec.yaml'))
 
 app.use(cors())
 app.use(json())

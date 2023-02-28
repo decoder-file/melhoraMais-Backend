@@ -5,7 +5,7 @@ services:
     # uncomment `platform` line to run on macOS M1
     platform: linux/x86_64
     container_name: mysql-container
-    image: mysql:8.0-debian
+    image: mysql
     env_file:
       - .env
     ports:
