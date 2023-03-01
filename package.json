@@ -16,7 +16,6 @@
     "migration:revert": "typeorm-ts-node-commonjs migration:revert -d ./src/repositories/mysql-connection.ts",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/repositories/mysql-connection.ts",
     "migration:create": "sh -c 'typeorm-ts-node-commonjs migration:create ./src/repositories/migrations/$0'",
-    "prepare": "husky install",
     "up": "docker-compose up -d"
   },
   "keywords": [],
