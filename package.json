@@ -4,7 +4,7 @@
   "description": "",
   "author": "Yan Soares",
   "scripts": {
-    "start": "npm run build && node -r dotenv/config dist/main",
+    "start": "node -r dotenv/config dist/main",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/main",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "lint": "eslint .",
