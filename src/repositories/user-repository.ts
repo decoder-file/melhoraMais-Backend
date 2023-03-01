@@ -1,6 +1,6 @@
 import { UserDTO } from '@/dtos'
 import { UserEntity } from '@/repositories/entities'
-import { mysqlSource } from '@/repositories/mysql-connection'
+import { dbSource } from '@/repositories/pg-connection'
 
 import { Repository } from 'typeorm'
 
@@ -8,7 +8,7 @@ export class UserRepository {
   private readonly users: Repository<UserEntity>
 
   constructor () {
-    this.users = mysqlSource.getRepository(UserEntity)
+    this.users = dbSource.getRepository(UserEntity)
   }
 
   async get (): Promise<UserEntity[]> {

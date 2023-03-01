@@ -1,5 +1,5 @@
 import { CalculationModel } from '@/models'
-import { mysqlSource } from '@/repositories/mysql-connection'
+import { dbSource } from '@/repositories/pg-connection'
 import { CalculationEntity } from '@/repositories/entities'
 import { CalculationDTO } from '@/dtos'
 
@@ -9,7 +9,7 @@ export class CalculationRepository {
   private readonly calculations: Repository<CalculationEntity>
 
   constructor () {
-    this.calculations = mysqlSource.getRepository(CalculationEntity)
+    this.calculations = dbSource.getRepository(CalculationEntity)
   }
 
   async get (): Promise<CalculationEntity[]> {

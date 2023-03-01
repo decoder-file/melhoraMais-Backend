@@ -10,9 +10,7 @@ export class createTagCalculationsTable1659105564941 implements MigrationInterfa
             {
               name: 'id',
               type: 'varchar',
-              isPrimary: true,
-              isGenerated: true,
-              generationStrategy: 'uuid'
+              isPrimary: true
             },
             {
               name: 'title',

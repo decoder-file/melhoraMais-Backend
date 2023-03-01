@@ -1,5 +1,5 @@
 import { TagCalculationModel } from '@/models'
-import { mysqlSource } from '@/repositories/mysql-connection'
+import { dbSource } from '@/repositories/pg-connection'
 import { TagCalculationEntity } from '@/repositories/entities'
 import { TagCalculationDTO } from '@/dtos'
 
@@ -9,7 +9,7 @@ export class TagCalculationRepository {
   private readonly tagCalculations: Repository<TagCalculationEntity>
 
   constructor () {
-    this.tagCalculations = mysqlSource.getRepository(TagCalculationEntity)
+    this.tagCalculations = dbSource.getRepository(TagCalculationEntity)
   }
 
   async get (): Promise<TagCalculationEntity[]> {

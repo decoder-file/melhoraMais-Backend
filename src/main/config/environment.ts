@@ -12,11 +12,11 @@ export const environment = {
   encrypt: {
     salt: 8
   },
-  mysql: {
+  pg: {
     host: 'localhost',
-    port: 3306,
-    user: process.env.MYSQL_USER ?? 'user',
-    password: process.env.MYSQL_PASSWORD ?? 'password',
-    database: process.env.MYSQL_DATABASE ?? 'some-db'
+    port: 5432,
+    user: process.env.POSTGRES_USER ?? 'yan',
+    password: process.env.POSTGRES_PASSWORD ?? 'root123',
+    database: process.env.POSTGRES_DB ?? 'agro-db'
   }
 }
