@@ -1,4 +1,4 @@
-import { resolve } from 'node:path'
+import { resolve } from 'path'
 import express, { Router, json } from 'express'
 import cors from 'cors'
 import YAML from 'yamljs'

@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto'
+import { randomUUID } from 'crypto'
 
 import { UserModel } from '@/models'
 import { UserDTO } from '@/dtos'

@@ -13,7 +13,7 @@ export const environment = {
     salt: 8
   },
   pg: {
-    host: 'localhost',
+    host: process.env.POSTGRES_HOST ?? 'localhost',
     port: 5432,
     user: process.env.POSTGRES_USER ?? 'yan',
     password: process.env.POSTGRES_PASSWORD ?? 'root123',

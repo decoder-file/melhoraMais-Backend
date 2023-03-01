@@ -7,7 +7,7 @@ jest.mock('bcryptjs', () => ({
   hash: jest.fn().mockImplementation(() => 'any-hashed-password')
 }))
 
-jest.mock('node:crypto', () => ({
+jest.mock('crypto', () => ({
   randomUUID: jest.fn().mockImplementation(() => 'any-id')
 }))
 

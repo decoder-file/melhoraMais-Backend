@@ -3,7 +3,7 @@ import { CalculationService } from '@/services'
 
 import { calculationModel, mockCalculation } from '@/tests/mocks'
 
-jest.mock('node:crypto', () => ({
+jest.mock('crypto', () => ({
   randomUUID: jest.fn().mockImplementation(() => 'any-id')
 }))
 
