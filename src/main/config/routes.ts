@@ -4,7 +4,7 @@ import cors from 'cors'
 import YAML from 'yamljs'
 import { serve, setup } from 'swagger-ui-express'
 
-import { TagCalculationControllerFactory, UserControllerFactory, LoginControllerFactory, CalculationControllerFactory } from '@/main/factories/controllers'
+import { TagCalculationControllerFactory, UserControllerFactory, LoginControllerFactory, CalculationControllerFactory, ForgotPasswordControllerFactory, ResetUsersPasswordControllerFactory } from '@/main/factories/controllers'
 import { ensureAuthenticated } from '@/middlewares'
 
 export const app = express()
@@ -13,6 +13,8 @@ const calculationController = CalculationControllerFactory()
 const loginController = LoginControllerFactory()
 const tagCalculationController = TagCalculationControllerFactory()
 const userController = UserControllerFactory()
+const forgotPasswordController = ForgotPasswordControllerFactory()
+const resetPasswordController = ResetUsersPasswordControllerFactory()
 const swaggerDocument = YAML.load(resolve(__dirname, '../../../api-spec.yaml'))
 
 app.use(cors())
@@ -39,5 +41,8 @@ router.get('/tag-calculations/:id', ensureAuthenticated, async (req, res) => tag
 router.get('/tag-calculations', ensureAuthenticated, async (req, res) => tagCalculationController.get(req, res))
 router.delete('/tag-calculations/:id', ensureAuthenticated, async (req, res) => tagCalculationController.delete(req, res))
 router.patch('/tag-calculations/:id', ensureAuthenticated, async (req, res) => tagCalculationController.update(req, res))
+
+router.post('/forgot-password', async (req, res) => forgotPasswordController.handle(req, res))
+router.post('/reset-password', async (req, res) => resetPasswordController.handle(req, res))
 
 app.use(router)
