@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { resolve } from 'node:path'
+import { resolve } from 'path'
 
 const nodeEnv = process.env.NODE_ENV
 

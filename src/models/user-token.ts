@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto'
+import { randomUUID } from 'crypto'
 
 import { UserTokenDTO } from '@/dtos'
 
