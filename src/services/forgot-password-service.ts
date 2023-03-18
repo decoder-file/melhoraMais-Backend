@@ -27,23 +27,19 @@ export class ForgotPasswordService {
     if (!user) throw new RequestError('Usuário não existe.')
     const data = this.generateUserTokenData(user)
     const userToken = new UserTokenModel(data)
-    const resetPasswordLink = this.generateLink()
+    const resetPasswordLink = this.generateLink(userToken.refreshToken)
     await this.usersTokensRepository.create(userToken)
     const mailData = { resetPasswordLink, ...user }
     await this.mailService.execute(templatePath, mailData, 'Agro API - Esqueci minha senha')
   }
 
-  private generateRefreshToken (): GenericObject {
-    const expiresDate = addHours(new Date(), 2)
-    const refreshToken = randomUUID()
-    return {
-      refreshToken,
-      expiresDate
-    }
+  private generateRefreshToken (): string {
+    return randomUUID()
   }
 
   private generateUserTokenData (user: UserEntity): UserTokenDTO {
-    const { refreshToken, expiresDate } = this.generateRefreshToken()
+    const expiresDate = addHours(new Date(), 2)
+    const refreshToken = this.generateRefreshToken()
     return {
       refreshToken,
       expiresDate,
@@ -51,8 +47,7 @@ export class ForgotPasswordService {
     }
   }
 
-  private generateLink (): string {
-    const { refreshToken } = this.generateRefreshToken()
+  private generateLink (refreshToken: string): string {
     const link = `${forgotMailUrl}?token=${String(refreshToken)}`
     return link
   }

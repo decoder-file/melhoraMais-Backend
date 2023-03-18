@@ -20,6 +20,7 @@ export class ResetUsersPasswordService {
     const user = await this.usersRepository.findById(userToken.userId)
     if (!user) throw new RequestError('Usuário não existe.')
     user.password = await hash(password, 8)
+    user.updated_at = new Date()
     await this.usersRepository.update(user)
     await this.usersTokensRepository.delete(userToken.id)
   }
