@@ -7,40 +7,44 @@ export class CalculationModel {
   title?: string
   description?: string
   bash: string
-  entrance_weight: string
-  daily_cost: string
+  entranceWeight: string
+  dailyCost: string
   gmd: string
-  purchase_price: string
-  length_of_stay: string
-  output_weight: string
-  rc_initial: string
-  rc_end: string
-  sale_price: string
-  produced_price: string
-  return_on_capital: string
+  purchasePrice: string
+  lengthOfStay: string
+  outputWeight: string
+  rcInitial: string
+  rcEnd: string
+  salePrice: string
+  producedPrice: string
+  returnOnCapital: string
   result: string
-  created_at: Date
+  userId: string
+  createdAt: Date
+  updatedAt?: Date
 
-  constructor (calculation: CalculationDTO) {
+  constructor (calculation: CalculationDTO, userId: string) {
     if (!this.id) {
-      this.id = randomUUID()
+      this.id = calculation.id ?? randomUUID()
     }
     this.tag = calculation.tag
     this.title = calculation.title
     this.description = calculation.description
     this.bash = calculation.bash
-    this.entrance_weight = calculation.entranceWeight
-    this.daily_cost = calculation.dailyCost
+    this.entranceWeight = calculation.entranceWeight
+    this.dailyCost = calculation.dailyCost
     this.gmd = calculation.gmd
-    this.purchase_price = calculation.purchasePrice
-    this.length_of_stay = calculation.lengthOfStay
-    this.output_weight = calculation.outputWeight
-    this.rc_initial = calculation.rcInitial
-    this.rc_end = calculation.rcEnd
-    this.sale_price = calculation.salePrice
-    this.produced_price = calculation.producedPrice
-    this.return_on_capital = calculation.returnOnCapital
+    this.purchasePrice = calculation.purchasePrice
+    this.lengthOfStay = calculation.lengthOfStay
+    this.outputWeight = calculation.outputWeight
+    this.rcInitial = calculation.rcInitial
+    this.rcEnd = calculation.rcEnd
+    this.salePrice = calculation.salePrice
+    this.producedPrice = calculation.producedPrice
+    this.returnOnCapital = calculation.returnOnCapital
     this.result = calculation.result
-    this.created_at = new Date()
+    this.userId = userId
+    this.createdAt = new Date()
+    this.updatedAt = new Date()
   }
 }

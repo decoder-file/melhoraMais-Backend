@@ -17,45 +17,48 @@ export class CalculationEntity {
   @Column()
   bash!: string
 
-  @Column()
-  entrance_weight!: string
+  @Column({ name: 'entrance_weight' })
+  entranceWeight!: string
 
-  @Column()
-  daily_cost!: string
+  @Column({ name: 'daily_cost' })
+  dailyCost!: string
 
   @Column()
   gmd!: string
 
-  @Column()
-  purchase_price!: string
+  @Column({ name: 'purchase_price' })
+  purchasePrice!: string
 
-  @Column()
-  length_of_stay!: string
+  @Column({ name: 'length_of_stay' })
+  lengthOfStay!: string
 
-  @Column()
-  output_weight!: string
+  @Column({ name: 'output_weight' })
+  outputWeight!: string
 
-  @Column()
-  rc_initial!: string
+  @Column({ name: 'rc_initial' })
+  rcInitial!: string
 
-  @Column()
-  rc_end!: string
+  @Column({ name: 'rc_end' })
+  rcEnd!: string
 
-  @Column()
-  sale_price!: string
+  @Column({ name: 'sale_price' })
+  salePrice!: string
 
-  @Column()
-  produced_price!: string
+  @Column({ name: 'produced_price' })
+  producedPrice!: string
 
-  @Column()
-  return_on_capital!: string
+  @Column({ name: 'return_on_capital' })
+  returnOnCapital!: string
 
   @Column()
   result!: string
 
-  @Column()
-  created_at!: Date
+  @Column({ name: 'user_id' })
+  userId!: string
 
-  @Column({ nullable: true })
-  updated_at!: Date
+  @Column({ name: 'created_at' })
+  createdAt!: Date
+
+  @Column({ nullable: true, name: 'updated_at' })
+  updatedAt!: Date
 }

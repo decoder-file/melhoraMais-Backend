@@ -8,7 +8,7 @@ export class CalculationController {
 
   async create (req: Request, res: Response): Promise<void> {
     try {
-      await this.calculationService.create(req.body)
+      await this.calculationService.create(req.body, req.user.id)
       res.sendStatus(200)
     } catch (err) {
       this.handleError(err, res)
@@ -24,9 +24,9 @@ export class CalculationController {
     }
   }
 
-  async get (_: Request, res: Response): Promise<void> {
+  async getByUser (req: Request, res: Response): Promise<void> {
     try {
-      const calculations = await this.calculationService.get()
+      const calculations = await this.calculationService.getByUser(req.user.id)
       res.status(200).json(calculations)
     } catch (err) {
       this.handleError(err, res)
@@ -46,6 +46,15 @@ export class CalculationController {
     try {
       await this.calculationService.delete(req.params.id)
       res.sendStatus(200)
+    } catch (err) {
+      this.handleError(err, res)
+    }
+  }
+
+  async sync (req: Request, res: Response): Promise<void> {
+    try {
+      await this.calculationService.sync(req.user.id, req.body)
+      res.sendStatus(204)
     } catch (err) {
       this.handleError(err, res)
     }

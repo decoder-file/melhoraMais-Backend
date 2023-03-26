@@ -12,16 +12,18 @@ export class TagCalculationRepository {
     this.tagCalculations = dbSource.getRepository(TagCalculationEntity)
   }
 
-  async get (): Promise<TagCalculationEntity[]> {
-    return await this.tagCalculations.find()
+  async getByUser (userId: string): Promise<TagCalculationEntity[]> {
+    return await this.tagCalculations.find({
+      where: { userId }
+    })
   }
 
-  async create (params: TagCalculationDTO): Promise<void> {
-    const tagCalculation = new TagCalculationModel(params)
+  async create (params: TagCalculationDTO, userId: string): Promise<void> {
+    const tagCalculation = new TagCalculationModel(params, userId)
     await this.tagCalculations.save(tagCalculation)
   }
 
-  async update (tagCalculation: TagCalculationEntity): Promise<void> {
+  async update (tagCalculation: TagCalculationModel): Promise<void> {
     await this.tagCalculations.update({ id: tagCalculation.id }, tagCalculation)
   }
 
@@ -31,5 +33,9 @@ export class TagCalculationRepository {
 
   async findById (id: string): Promise<TagCalculationEntity | null> {
     return await this.tagCalculations.findOneBy({ id })
+  }
+
+  async upsert (data: TagCalculationModel[]): Promise<void> {
+    await this.tagCalculations.upsert(data, { conflictPaths: ['id'] })
   }
 }

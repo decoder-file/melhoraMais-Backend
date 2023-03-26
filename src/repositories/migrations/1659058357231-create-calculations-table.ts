@@ -83,6 +83,10 @@ export class createCalculationsTable1659058357231 implements MigrationInterface 
               type: 'varchar'
             },
             {
+              name: 'user_id',
+              type: 'varchar'
+            },
+            {
               name: 'created_at',
               type: 'timestamp',
               default: 'now()'

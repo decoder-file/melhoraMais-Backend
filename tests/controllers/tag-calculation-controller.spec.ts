@@ -22,6 +22,7 @@ describe('TagCalculationController', () => {
   })
 
   beforeEach(() => {
+    req.user = { id: 'any-userId' }
     req.body = { ...mockTagCalculation }
     req.params = { id: 'any-id' }
   })
@@ -32,7 +33,7 @@ describe('TagCalculationController', () => {
 
       await tagCalculationController.create(req, res)
 
-      expect(tagCalculationService.create).toHaveBeenNthCalledWith(1, req.body)
+      expect(tagCalculationService.create).toHaveBeenNthCalledWith(1, req.body, req.user.id)
       expect(res.sendStatus).toHaveBeenNthCalledWith(1, 200)
     })
 
@@ -42,7 +43,7 @@ describe('TagCalculationController', () => {
 
       await tagCalculationController.create(req, res)
 
-      expect(tagCalculationService.create).toHaveBeenNthCalledWith(1, req.body)
+      expect(tagCalculationService.create).toHaveBeenNthCalledWith(1, req.body, req.user.id)
       expect(res.status).toHaveBeenNthCalledWith(1, 500)
       expect(res.json).toHaveBeenNthCalledWith(1, { message: error })
     })
@@ -115,24 +116,24 @@ describe('TagCalculationController', () => {
     })
   })
 
-  describe('get', () => {
+  describe('getByUser', () => {
     it('should be able to get list of tag-calculation', async () => {
-      tagCalculationService.get = jest.fn().mockResolvedValue([tagCalculationModel])
+      tagCalculationService.getByUser = jest.fn().mockResolvedValue([tagCalculationModel])
 
-      await tagCalculationController.get(req, res)
+      await tagCalculationController.getByUser(req, res)
 
-      expect(tagCalculationService.get).toHaveBeenCalledTimes(1)
+      expect(tagCalculationService.getByUser).toHaveBeenCalledTimes(1)
       expect(res.status).toHaveBeenNthCalledWith(1, 200)
       expect(res.json).toHaveBeenNthCalledWith(1, [tagCalculationModel])
     })
 
     it('should not be able to get list of tag-calculation', async () => {
       const error = new NotAuhorizedError('some-error')
-      tagCalculationService.get = jest.fn().mockRejectedValue(error)
+      tagCalculationService.getByUser = jest.fn().mockRejectedValue(error)
 
-      await tagCalculationController.get(req, res)
+      await tagCalculationController.getByUser(req, res)
 
-      expect(tagCalculationService.get).toHaveBeenCalledTimes(1)
+      expect(tagCalculationService.getByUser).toHaveBeenCalledTimes(1)
       expect(res.status).toHaveBeenNthCalledWith(1, 401)
       expect(res.json).toHaveBeenNthCalledWith(1, { message: error.message })
     })

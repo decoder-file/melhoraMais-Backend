@@ -11,9 +11,12 @@ export class TagCalculationEntity {
   @Column()
   color!: string
 
-  @Column()
-  created_at!: Date
+  @Column({ name: 'user_id' })
+  userId!: string
 
-  @Column({ nullable: true })
-  updated_at!: Date
+  @Column({ name: 'created_at' })
+  createdAt!: Date
+
+  @Column({ nullable: true, name: 'updated_at' })
+  updatedAt!: Date
 }

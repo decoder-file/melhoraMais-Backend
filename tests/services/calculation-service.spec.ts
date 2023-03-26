@@ -1,13 +1,14 @@
 import { CalculationRepository } from '@/repositories'
 import { CalculationService } from '@/services'
 
-import { calculationModel, mockCalculation } from '@/tests/mocks'
+import { calculationModel, mockCalculation, mockCalculationSync } from '@/tests/mocks'
 
 jest.mock('crypto', () => ({
   randomUUID: jest.fn().mockImplementation(() => 'any-id')
 }))
 
 describe('CalculationService', () => {
+  const userId = 'any-userId'
   const calculationRepository = {} as CalculationRepository
   const calculationService = new CalculationService(calculationRepository)
 
@@ -19,9 +20,9 @@ describe('CalculationService', () => {
     it('should be able to create calculation', async () => {
       calculationRepository.create = jest.fn()
 
-      await calculationService.create(mockCalculation)
+      await calculationService.create(mockCalculation, userId)
 
-      expect(calculationRepository.create).toHaveBeenNthCalledWith(1, mockCalculation)
+      expect(calculationRepository.create).toHaveBeenNthCalledWith(1, mockCalculation, userId)
     })
   })
 
@@ -35,7 +36,7 @@ describe('CalculationService', () => {
       expect(calculationRepository.findById).toHaveBeenNthCalledWith(1, calculationModel.id)
       expect(calculationRepository.update).toHaveBeenNthCalledWith(1, {
         ...calculationModel,
-        updated_at: new Date()
+        updatedAt: new Date()
       })
     })
 
@@ -53,21 +54,21 @@ describe('CalculationService', () => {
     })
   })
 
-  describe('get', () => {
-    it('should be able to get all users', async () => {
-      calculationRepository.get = jest.fn().mockResolvedValue([calculationModel])
+  describe('getByUser', () => {
+    it('should be able to get all calculations by user', async () => {
+      calculationRepository.getByUser = jest.fn().mockResolvedValue([calculationModel])
 
-      await calculationService.get()
+      await calculationService.getByUser(userId)
 
-      expect(calculationRepository.get).toHaveBeenCalled()
+      expect(calculationRepository.getByUser).toHaveBeenNthCalledWith(1, userId)
     })
 
-    it('should be able to get empty list of users', async () => {
-      calculationRepository.get = jest.fn().mockResolvedValue([])
+    it('should be able to get empty list of calculations by users', async () => {
+      calculationRepository.getByUser = jest.fn().mockResolvedValue([])
 
-      await calculationService.get()
+      await calculationService.getByUser(userId)
 
-      expect(calculationRepository.get).toHaveBeenCalled()
+      expect(calculationRepository.getByUser).toHaveBeenCalled()
     })
   })
 
@@ -86,6 +87,30 @@ describe('CalculationService', () => {
       await calculationService.getById('any-id')
 
       expect(calculationRepository.findById).toHaveBeenNthCalledWith(1, calculationModel.id)
+    })
+  })
+
+  describe('sync', () => {
+    it('should be able to upsert calculations', async () => {
+      calculationRepository.delete = jest.fn()
+      calculationRepository.upsert = jest.fn()
+      calculationRepository.getByUser = jest.fn().mockResolvedValue([calculationModel, calculationModel])
+
+      await calculationService.sync(userId, [mockCalculationSync])
+
+      expect(calculationRepository.getByUser).toHaveBeenNthCalledWith(1, calculationModel.userId)
+      expect(calculationRepository.upsert).toHaveBeenNthCalledWith(1, [mockCalculationSync])
+    })
+
+    it('should be able to delete calculations on upsert', async () => {
+      calculationRepository.delete = jest.fn()
+      calculationRepository.upsert = jest.fn()
+      calculationRepository.getByUser = jest.fn().mockResolvedValue([calculationModel, calculationModel])
+
+      await calculationService.sync(userId, [{ ...mockCalculationSync, id: 'id-to-delete' }])
+
+      expect(calculationRepository.getByUser).toHaveBeenNthCalledWith(1, calculationModel.userId)
+      expect(calculationRepository.upsert).toHaveBeenNthCalledWith(1, [{ ...mockCalculationSync, id: 'id-to-delete' }])
     })
   })
 

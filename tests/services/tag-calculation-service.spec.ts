@@ -2,9 +2,10 @@ import { RequestError } from '@/errors'
 import { TagCalculationRepository } from '@/repositories'
 import { TagCalculationService } from '@/services'
 
-import { mockTagCalculation, tagCalculationModel } from '@/tests/mocks'
+import { mockTagCalculation, mockTagCalculationSync, tagCalculationModel } from '@/tests/mocks'
 
 describe('TagCalculationService', () => {
+  const userId = 'any-userId'
   const tagCalculationRepository = {} as TagCalculationRepository
   const tagCalculationService = new TagCalculationService(tagCalculationRepository)
 
@@ -16,9 +17,9 @@ describe('TagCalculationService', () => {
     it('should be able to create calculation', async () => {
       tagCalculationRepository.create = jest.fn()
 
-      await tagCalculationService.create(mockTagCalculation)
+      await tagCalculationService.create(mockTagCalculation, userId)
 
-      expect(tagCalculationRepository.create).toHaveBeenNthCalledWith(1, mockTagCalculation)
+      expect(tagCalculationRepository.create).toHaveBeenNthCalledWith(1, mockTagCalculation, userId)
     })
   })
 
@@ -32,7 +33,7 @@ describe('TagCalculationService', () => {
       expect(tagCalculationRepository.findById).toHaveBeenNthCalledWith(1, tagCalculationModel.id)
       expect(tagCalculationRepository.update).toHaveBeenNthCalledWith(1, {
         ...tagCalculationModel,
-        updated_at: new Date()
+        updatedAt: new Date()
       })
     })
 
@@ -51,20 +52,12 @@ describe('TagCalculationService', () => {
   })
 
   describe('get', () => {
-    it('should be able to get all users', async () => {
-      tagCalculationRepository.get = jest.fn().mockResolvedValue([tagCalculationModel])
+    it('should be able to get all tag-calculations by userId', async () => {
+      tagCalculationRepository.getByUser = jest.fn().mockResolvedValue([tagCalculationModel])
 
-      await tagCalculationService.get()
+      await tagCalculationService.getByUser(userId)
 
-      expect(tagCalculationRepository.get).toHaveBeenCalled()
-    })
-
-    it('should be able to get empty list of users', async () => {
-      tagCalculationRepository.get = jest.fn().mockResolvedValue([])
-
-      await tagCalculationService.get()
-
-      expect(tagCalculationRepository.get).toHaveBeenCalled()
+      expect(tagCalculationRepository.getByUser).toHaveBeenNthCalledWith(1, userId)
     })
   })
 
@@ -83,6 +76,30 @@ describe('TagCalculationService', () => {
       await tagCalculationService.getById('any-id')
 
       expect(tagCalculationRepository.findById).toHaveBeenNthCalledWith(1, tagCalculationModel.id)
+    })
+  })
+
+  describe('sync', () => {
+    it('should be able to upsert tag-calculations', async () => {
+      tagCalculationRepository.delete = jest.fn()
+      tagCalculationRepository.upsert = jest.fn()
+      tagCalculationRepository.getByUser = jest.fn().mockResolvedValue([tagCalculationModel, tagCalculationModel])
+
+      await tagCalculationService.sync(userId, [mockTagCalculationSync])
+
+      expect(tagCalculationRepository.getByUser).toHaveBeenNthCalledWith(1, tagCalculationModel.userId)
+      expect(tagCalculationRepository.upsert).toHaveBeenNthCalledWith(1, [mockTagCalculationSync])
+    })
+
+    it('should be able to delete tag-calculations on upsert', async () => {
+      tagCalculationRepository.delete = jest.fn()
+      tagCalculationRepository.upsert = jest.fn()
+      tagCalculationRepository.getByUser = jest.fn().mockResolvedValue([tagCalculationModel, tagCalculationModel])
+
+      await tagCalculationService.sync(userId, [{ ...mockTagCalculationSync, id: 'id-to-delete' }])
+
+      expect(tagCalculationRepository.getByUser).toHaveBeenNthCalledWith(1, tagCalculationModel.userId)
+      expect(tagCalculationRepository.upsert).toHaveBeenNthCalledWith(1, [{ ...mockTagCalculationSync, id: 'id-to-delete' }])
     })
   })
 

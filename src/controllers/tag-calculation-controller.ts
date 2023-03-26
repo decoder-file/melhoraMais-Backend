@@ -8,7 +8,7 @@ export class TagCalculationController {
 
   async create (req: Request, res: Response): Promise<void> {
     try {
-      await this.tagCalculationService.create(req.body)
+      await this.tagCalculationService.create(req.body, req.user.id)
       res.sendStatus(200)
     } catch (err) {
       this.handleError(err, res)
@@ -24,9 +24,9 @@ export class TagCalculationController {
     }
   }
 
-  async get (_: Request, res: Response): Promise<void> {
+  async getByUser (req: Request, res: Response): Promise<void> {
     try {
-      const tagCalculations = await this.tagCalculationService.get()
+      const tagCalculations = await this.tagCalculationService.getByUser(req.user.id)
       res.status(200).json(tagCalculations)
     } catch (err) {
       this.handleError(err, res)

@@ -6,14 +6,16 @@ export class TagCalculationModel {
   id?: string
   title: string
   color: string
-  created_at: Date
+  userId: string
+  createdAt: Date
 
-  constructor (tagCalculation: TagCalculationDTO) {
+  constructor (tagCalculation: TagCalculationDTO, userId: string) {
     if (!this.id) {
-      this.id = randomUUID()
+      this.id = tagCalculation.id ?? randomUUID()
     }
     this.title = tagCalculation.title
     this.color = tagCalculation.color
-    this.created_at = new Date()
+    this.userId = userId
+    this.createdAt = new Date()
   }
 }

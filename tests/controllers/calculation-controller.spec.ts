@@ -22,6 +22,7 @@ describe('calculationController', () => {
   })
 
   beforeEach(() => {
+    req.user = { id: 'any-userId' }
     req.body = { ...mockCalculation }
     req.params = { id: 'any-id' }
   })
@@ -32,7 +33,7 @@ describe('calculationController', () => {
 
       await calculationController.create(req, res)
 
-      expect(calculationService.create).toHaveBeenNthCalledWith(1, req.body)
+      expect(calculationService.create).toHaveBeenNthCalledWith(1, req.body, req.user.id)
       expect(res.sendStatus).toHaveBeenNthCalledWith(1, 200)
     })
 
@@ -42,7 +43,7 @@ describe('calculationController', () => {
 
       await calculationController.create(req, res)
 
-      expect(calculationService.create).toHaveBeenNthCalledWith(1, req.body)
+      expect(calculationService.create).toHaveBeenNthCalledWith(1, req.body, req.user.id)
       expect(res.status).toHaveBeenNthCalledWith(1, 500)
       expect(res.json).toHaveBeenNthCalledWith(1, { message: error })
     })
@@ -115,24 +116,24 @@ describe('calculationController', () => {
     })
   })
 
-  describe('get', () => {
+  describe('getByUser', () => {
     it('should be able to get list of calculation', async () => {
-      calculationService.get = jest.fn().mockResolvedValue([tagCalculationModel])
+      calculationService.getByUser = jest.fn().mockResolvedValue([tagCalculationModel])
 
-      await calculationController.get(req, res)
+      await calculationController.getByUser(req, res)
 
-      expect(calculationService.get).toHaveBeenCalledTimes(1)
+      expect(calculationService.getByUser).toHaveBeenCalledTimes(1)
       expect(res.status).toHaveBeenNthCalledWith(1, 200)
       expect(res.json).toHaveBeenNthCalledWith(1, [tagCalculationModel])
     })
 
     it('should not be able to get list of calculation', async () => {
       const error = new NotAuhorizedError('some-error')
-      calculationService.get = jest.fn().mockRejectedValue(error)
+      calculationService.getByUser = jest.fn().mockRejectedValue(error)
 
-      await calculationController.get(req, res)
+      await calculationController.getByUser(req, res)
 
-      expect(calculationService.get).toHaveBeenCalledTimes(1)
+      expect(calculationService.getByUser).toHaveBeenCalledTimes(1)
       expect(res.status).toHaveBeenNthCalledWith(1, 401)
       expect(res.json).toHaveBeenNthCalledWith(1, { message: error.message })
     })

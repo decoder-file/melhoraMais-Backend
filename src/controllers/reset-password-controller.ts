@@ -8,7 +8,7 @@ export class ResetUsersPasswordController {
 
   async handle (req: Request, res: Response): Promise<void> {
     try {
-      await this.service.execute(String(req.query.token), req.body.password)
+      await this.service.execute(req.body.token, req.body.password)
       res.sendStatus(200)
     } catch (error) {
       if (error instanceof RequestError) {

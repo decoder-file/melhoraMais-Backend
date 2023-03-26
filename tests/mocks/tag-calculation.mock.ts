@@ -1,14 +1,23 @@
 import { TagCalculationModel } from '@/models'
-import { TagCalculationDTO } from '@/dtos'
+import { SyncTagCalculationDTO, TagCalculationDTO } from '@/dtos'
 
 export const mockTagCalculation: TagCalculationDTO = {
   title: 'any-title',
   color: 'any-color'
 }
 
-export const tagCalculationModel: TagCalculationModel = {
+export const mockTagCalculationSync: SyncTagCalculationDTO = {
   id: 'any-id',
   title: 'any-title',
   color: 'any-color',
-  created_at: new Date('2022-08-01')
+  userId: 'any-userId',
+  createdAt: new Date('2022-08-01')
+}
+
+export const tagCalculationModel: TagCalculationModel = {
+  id: 'any-id',
+  userId: 'any-userId',
+  title: 'any-title',
+  color: 'any-color',
+  createdAt: new Date('2022-08-01')
 }

@@ -1,10 +1,8 @@
-import { randomUUID } from 'crypto'
-
 import { UserTokenDTO } from '@/dtos'
 import { RequestError } from '@/errors'
 import { UserRepository } from '@/repositories'
 import { UserEntity } from '@/repositories/entities'
-import { forgotMailUrl, templatePath } from '@/main/config'
+import { templatePath } from '@/main/config'
 
 import { addHours } from 'date-fns'
 import { UserTokenModel } from '@/models'
@@ -27,14 +25,20 @@ export class ForgotPasswordService {
     if (!user) throw new RequestError('Usuário não existe.')
     const data = this.generateUserTokenData(user)
     const userToken = new UserTokenModel(data)
-    const resetPasswordLink = this.generateLink(userToken.refreshToken)
     await this.usersTokensRepository.create(userToken)
-    const mailData = { resetPasswordLink, ...user }
+    const mailData = { ...user, resetPasswordCode: userToken.refreshToken }
     await this.mailService.execute(templatePath, mailData, 'Agro API - Esqueci minha senha')
   }
 
   private generateRefreshToken (): string {
-    return randomUUID()
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    let code = ''
+
+    for (let i = 0; i < 6; i++) {
+      code += characters.charAt(Math.floor(Math.random() * characters.length))
+    }
+
+    return code
   }
 
   private generateUserTokenData (user: UserEntity): UserTokenDTO {
@@ -45,10 +49,5 @@ export class ForgotPasswordService {
       expiresDate,
       userId: user.id
     }
-  }
-
-  private generateLink (refreshToken: string): string {
-    const link = `${forgotMailUrl}?token=${String(refreshToken)}`
-    return link
   }
 }

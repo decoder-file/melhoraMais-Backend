@@ -12,16 +12,18 @@ export class CalculationRepository {
     this.calculations = dbSource.getRepository(CalculationEntity)
   }
 
-  async get (): Promise<CalculationEntity[]> {
-    return await this.calculations.find()
+  async getByUser (userId: string): Promise<CalculationEntity[]> {
+    return await this.calculations.find({
+      where: { userId }
+    })
   }
 
-  async create (params: CalculationDTO): Promise<void> {
-    const calculation = new CalculationModel(params)
+  async create (params: CalculationDTO, userId: string): Promise<void> {
+    const calculation = new CalculationModel(params, userId)
     await this.calculations.save(calculation)
   }
 
-  async update (calculation: CalculationEntity): Promise<void> {
+  async update (calculation: CalculationModel): Promise<void> {
     await this.calculations.update({ id: calculation.id }, calculation)
   }
 
@@ -31,5 +33,9 @@ export class CalculationRepository {
 
   async findById (id: string): Promise<CalculationEntity | null> {
     return await this.calculations.findOneBy({ id })
+  }
+
+  async upsert (data: CalculationModel[]): Promise<void> {
+    await this.calculations.upsert(data, { conflictPaths: ['id'] })
   }
 }

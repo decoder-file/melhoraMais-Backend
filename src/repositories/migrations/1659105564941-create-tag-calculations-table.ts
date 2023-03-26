@@ -21,6 +21,10 @@ export class createTagCalculationsTable1659105564941 implements MigrationInterfa
               type: 'varchar'
             },
             {
+              name: 'user_id',
+              type: 'varchar'
+            },
+            {
               name: 'created_at',
               type: 'timestamp',
               default: 'now()'
