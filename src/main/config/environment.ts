@@ -16,6 +16,7 @@ export const environment = {
     salt: 8
   },
   pg: {
+    url: process.env.DATABASE_URL,
     host: process.env.POSTGRES_HOST ?? 'localhost',
     port: 5432,
     user: process.env.POSTGRES_USER ?? 'yan',
