@@ -36,9 +36,7 @@ export const environment = {
     region: process.env.AWS_REGION ?? 'some-region',
     accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? 'any-access-key=id',
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? 'any-secret-access-key',
-    ses: {
-      emailSource: process.env.AWS_SES_EMAIL_SOURCE
-    }
+    emailSource: process.env.AWS_SES_EMAIL_SOURCE
   }
 }
 

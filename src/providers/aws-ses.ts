@@ -2,21 +2,38 @@ import { SendMailDTO } from '@/dtos'
 import { SendMail } from '@/interfaces'
 import { environment } from '@/main/config'
 
-import { SendTemplatedEmailCommand, SESClient } from '@aws-sdk/client-ses'
+import { SESClient, SendTemplatedEmailCommand } from '@aws-sdk/client-ses'
 
 export class AWSSESCloudProvider implements SendMail {
+  private readonly client: SESClient
+
+  constructor () {
+    this.client = new SESClient({
+      credentials: {
+        accessKeyId: environment.aws.accessKeyId,
+        secretAccessKey: environment.aws.secretAccessKey
+      },
+      region: environment.aws.region
+    })
+  }
+
   public async sendMail (params: SendMailDTO): Promise<void> {
-    const mailToSend = await this.buildEmail(params)
-    await new SESClient({ region: environment.aws.region }).send(mailToSend)
+    try {
+      const mailToSend = await this.buildEmail(params)
+      await this.client.send(mailToSend)
+    } catch (err) {
+      console.log('ERRO AWS', err)
+    }
   }
 
   private async buildEmail (params: SendMailDTO): Promise<SendTemplatedEmailCommand> {
     const { to: mailTo, template } = params
+
     return new SendTemplatedEmailCommand({
-      Source: environment.aws.ses.emailSource!,
       Destination: { ToAddresses: [mailTo] },
-      Template: template.file,
-      TemplateData: JSON.stringify(template.variables)
+      TemplateData: JSON.stringify(template.variables),
+      Source: environment.aws.emailSource,
+      Template: template.file
     })
   }
 }

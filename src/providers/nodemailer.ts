@@ -25,7 +25,7 @@ export class NodemailerProvider implements SendMail {
     try {
       await this.client.sendMail({
         ...params,
-        from: environment.aws.ses.emailSource,
+        from: environment.aws.emailSource,
         to: mailTo,
         subject,
         html: await this.templateProvider.parse(template)
