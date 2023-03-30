@@ -9,10 +9,6 @@ export class AWSSESCloudProvider implements SendMail {
 
   constructor () {
     this.client = new SESClient({
-      credentials: {
-        accessKeyId: environment.aws.accessKeyId,
-        secretAccessKey: environment.aws.secretAccessKey
-      },
       region: environment.aws.region
     })
   }
