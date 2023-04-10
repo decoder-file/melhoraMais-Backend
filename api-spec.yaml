@@ -229,6 +229,38 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/Error"
+            
+  /calculations/sync:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - "Calculations"
+      summary: Sincronizar calculations
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Sincronizar calculations"
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/CalculationPayload"
+      responses:
+        201:
+          description: Successful operation
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        422:
+          description: Unprocessable Entity
+        500:
+          description: Internal server error
   
   /calculations/{id}:
     get:
@@ -359,6 +391,38 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/Error"
+            
+  /tag-calculations/sync:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - "TagCalculations"
+      summary: Sincronizar tags
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Sincronizar tags"
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/TagCalculationPayload"
+      responses:
+        201:
+          description: Successful operation
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedError"
+        422:
+          description: Unprocessable Entity
+        500:
+          description: Internal server error
 
   /tag-calculations/{id}:
     get:

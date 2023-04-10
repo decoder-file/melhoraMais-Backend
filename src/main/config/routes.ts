@@ -38,6 +38,7 @@ router.delete('/calculations/:id', ensureAuthenticated, async (req, res) => calc
 router.patch('/calculations/:id', ensureAuthenticated, async (req, res) => calculationController.update(req, res))
 
 router.post('/tag-calculations', ensureAuthenticated, async (req, res) => tagCalculationController.create(req, res))
+router.post('/tag-calculations/sync', ensureAuthenticated, async (req, res) => tagCalculationController.sync(req, res))
 router.get('/tag-calculations/:id', ensureAuthenticated, async (req, res) => tagCalculationController.getById(req, res))
 router.get('/tag-calculations', ensureAuthenticated, async (req, res) => tagCalculationController.getByUser(req, res))
 router.delete('/tag-calculations/:id', ensureAuthenticated, async (req, res) => tagCalculationController.delete(req, res))

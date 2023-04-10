@@ -51,6 +51,15 @@ export class TagCalculationController {
     }
   }
 
+  async sync (req: Request, res: Response): Promise<void> {
+    try {
+      await this.tagCalculationService.sync(req.user.id, req.body)
+      res.sendStatus(204)
+    } catch (err) {
+      this.handleError(err, res)
+    }
+  }
+
   private handleError (error: unknown, res: Response): void {
     if (error instanceof RequestError) {
       res.status(422).json({ message: error.message })
