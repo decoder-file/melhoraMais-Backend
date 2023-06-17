@@ -13,7 +13,7 @@ export const environment = {
     refreshTokenExpiresIn: process.env.JWT_SECRET_REFRESH_TOKEN_EXPIRES_IN ?? '7d'
   },
   encrypt: {
-    salt: 8
+    salt: 10
   },
   pg: {
     host: process.env.POSTGRES_HOST ?? 'localhost',

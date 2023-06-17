@@ -3,4 +3,5 @@ export type UserDTO = {
   email: string
   password: string
   location: string
+  created_at?: Date
 }

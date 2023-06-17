@@ -19,7 +19,7 @@ export class UserModel {
     this.email = user.email
     this.password = user.password
     this.location = user.location
-    this.created_at = new Date()
+    this.created_at = user.created_at ?? new Date()
     this.updated_at = null
   }
 }

@@ -5,7 +5,7 @@ import { UserRepository } from '@/repositories'
 import { UserEntity } from '@/repositories/entities'
 import { environment } from '@/main/config'
 
-import { hash } from 'bcryptjs'
+import bcrypt from 'bcryptjs'
 
 export class UserService {
   constructor (private readonly userRepository: UserRepository) {}
@@ -28,14 +28,14 @@ export class UserService {
   }
 
   async update (id: string, params: UserDTO): Promise<void> {
-    const { password } = params
     const userExists = await this.userRepository.findById(id)
     if (!userExists) throw new RequestError('Usuário não existe.')
-    const user = new UserModel(params)
+    const user = new UserModel({ ...params, created_at: userExists.created_at })
+    const newPassword = params.password !== undefined ? await this.encrypt(params.password) : userExists.password
     const userToUpdate = {
       ...user,
       id: userExists.id,
-      password: await this.encrypt(password),
+      password: newPassword,
       updated_at: new Date()
     }
     await this.userRepository.update(userToUpdate)
@@ -48,6 +48,6 @@ export class UserService {
   }
 
   public async encrypt (password: string): Promise<string> {
-    return hash(password, environment.encrypt.salt)
+    return await bcrypt.hash(password, environment.encrypt.salt)
   }
 }
